@@ -66,6 +66,8 @@ class RegisterActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
 
                         Toast.makeText(this@RegisterActivity, "Account created.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
 
                     } else {
 
