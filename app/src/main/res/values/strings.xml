@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AmiGO</string>
+    <string name="title_activity_explore_locations">ExploreLocationsActivity</string>
 </resources>
