@@ -12,7 +12,10 @@ import com.example.amigo.databinding.FragmentSettingsBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-
+///this code is adapted from Youtube
+///https://www.youtube.com/watch?v=QAKq8UBv4GI&t=1750s
+///Codes Easy
+///https://www.youtube.com/@CodesEasy
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
