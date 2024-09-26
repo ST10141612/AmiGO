@@ -1,0 +1,52 @@
+package com.example.amigo
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import com.example.amigo.databinding.FragmentSettingsBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+
+class SettingsFragment : Fragment() {
+
+    private lateinit var binding: FragmentSettingsBinding
+
+    private lateinit var buttonlogOut: Button
+    private lateinit var textView: TextView
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        auth = Firebase.auth
+        buttonlogOut = binding.btnLogout
+        textView = binding.tvUserDetails
+
+        val user = auth.currentUser
+        if(user == null){
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        } else {
+            textView.text = user.email
+        }
+
+        buttonlogOut.setOnClickListener {
+            Firebase.auth.signOut()
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+        // Inflate the layout for this fragment
+        return binding.root
+    }
+}

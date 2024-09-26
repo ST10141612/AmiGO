@@ -8,38 +8,42 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import com.example.amigo.databinding.ActivityMainBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var ButtonlogOut: Button
-    private lateinit var textView: TextView
-    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        replaceFragment(HomeFragment())
 
-        auth = Firebase.auth
-        ButtonlogOut = binding.btnLogout
-        textView = binding.userDetails
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.trips -> replaceFragment(TripsFragment())
+                R.id.explore -> replaceFragment(ExploreFragment())
+                R.id.settings -> replaceFragment(SettingsFragment())
 
-        val user = auth.currentUser
-        if(user == null){
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
-        } else {
-            textView.text = user.email
+                else -> {
+                }
+            }
+                true
         }
 
-        ButtonlogOut.setOnClickListener {
-            Firebase.auth.signOut()
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
-        }
 
+
+
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 }
