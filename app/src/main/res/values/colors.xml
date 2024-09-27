@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    ///this code was adapted from Stack Overflow
+    ///https://stackoverflow.com/questions/3769762/web-colors-in-an-android-color-xml-resource-file
+    ///Sankar Ganesh PMP
+    ///https://stackoverflow.com/users/424413/sankar-ganesh-pmp
+    <color name="red">#FF0000</color>
 </resources>

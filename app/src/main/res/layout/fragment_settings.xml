@@ -3,28 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+
 
         <TextView
-            android:id="@+id/tvUserDetails"
+            android:id="@+id/lblSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:text="@string/settings"
+            android:textSize="35dp"
+            android:textColor="@color/white"
+            android:layout_marginVertical="30dp"
+            android:layout_marginHorizontal="20dp"/>
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/logout" />
+    <TextView
+        android:id="@+id/tvUserDetails"
+        android:layout_width="189dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="230dp"
+        android:layout_marginVertical="45dp"
+        android:text="@string/settings"
+        android:textColor="@color/white"
+        android:textSize="10dp" />
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="263dp"
+        android:layout_height="58dp"
+        android:layout_marginHorizontal="79dp"
+        android:layout_marginVertical="499dp"
+        android:text="@string/logout" />
 
 
 </FrameLayout>
