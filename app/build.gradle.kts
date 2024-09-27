@@ -1,9 +1,24 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+android.buildFeatures.buildConfig = true
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
-
 }
+
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+    ignoreList.add("keyToIgnore")
+    ignoreList.add("sdk.*")
+}
+
+var apiKeyPropertiesFile = rootProject.file("secrets.properties")
+var apiKeyProperties = Properties()
+apiKeyProperties.load(FileInputStream(apiKeyPropertiesFile))
 
 android {
     namespace = "com.example.amigo"
@@ -17,6 +32,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "MAPS_API_KEY", apiKeyProperties["MAPS_API_KEY"].toString())
     }
 
     buildTypes {
@@ -52,6 +69,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.places)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

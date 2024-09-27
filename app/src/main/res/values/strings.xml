@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">AmiGO</string>
     <string name="title_activity_explore_locations">ExploreLocationsActivity</string>
+    <string name="lblSelectType">Select the type of places you want to see</string>
+    <string name="lblSearchResults">Search Results</string>
+    <string name="menu_explore">Explore</string>
+    <string name="menu_trips">Trips</string>
+    <string name="menu_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
