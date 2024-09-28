@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    style="@style/ScreenBackground"
     tools:context=".SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,29 +13,38 @@
             android:id="@+id/lblSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings"
-            android:textSize="35dp"
-            android:textColor="@color/white"
+            android:text="@string/settings_heading"
+            android:textSize="35sp"
+            style="@style/TextColor"
             android:layout_marginVertical="30dp"
             android:layout_marginHorizontal="20dp"/>
 
-    <TextView
-        android:id="@+id/tvUserDetails"
-        android:layout_width="189dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="230dp"
-        android:layout_marginVertical="45dp"
-        android:text="@string/settings"
-        android:textColor="@color/white"
-        android:textSize="10dp" />
+        <TextView
+            android:id="@+id/tvUserDetails"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            style="@style/TextColor"
+            android:layout_marginHorizontal="180dp"
+            android:layout_marginVertical="45dp"
+            android:textSize="15sp" />
 
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/btnPreferences"
         android:layout_width="263dp"
         android:layout_height="58dp"
-        android:layout_marginHorizontal="79dp"
-        android:layout_marginVertical="499dp"
-        android:text="@string/logout" />
+        style="@style/TextColor"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginVertical="399dp"
+        android:text="@string/preference" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="263dp"
+            android:layout_height="58dp"
+            style="@style/TextColor"
+            android:layout_marginHorizontal="45dp"
+            android:layout_marginVertical="499dp"
+            android:text="@string/logout" />
 
 
 </FrameLayout>

@@ -20,7 +20,8 @@ class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
 
-    private lateinit var buttonlogOut: Button
+    private lateinit var buttonLogOut: Button
+    private lateinit var buttonPreferences: Button
     private lateinit var textView: TextView
     private lateinit var auth: FirebaseAuth
 
@@ -32,7 +33,8 @@ class SettingsFragment : Fragment() {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         auth = Firebase.auth
-        buttonlogOut = binding.btnLogout
+        buttonLogOut = binding.btnLogout
+        buttonPreferences = binding.btnPreferences
         textView = binding.tvUserDetails
 
         val user = auth.currentUser
@@ -44,10 +46,18 @@ class SettingsFragment : Fragment() {
             textView.text = user.email
         }
 
-        buttonlogOut.setOnClickListener {
+        buttonLogOut.setOnClickListener {
             Firebase.auth.signOut()
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
+        }
+
+        buttonPreferences.setOnClickListener {
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, PreferenceFragment())
+            fragmentTransaction.addToBackStack(null) // Add transaction to backstack for reverse navigation
+            fragmentTransaction.commit()
         }
         // Inflate the layout for this fragment
         return binding.root

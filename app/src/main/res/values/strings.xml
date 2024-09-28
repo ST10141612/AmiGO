@@ -9,5 +9,10 @@
     <string name="logout">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="settings">Settings</string>
+    <string name="settings_heading">Settings</string>
+    <string name="home_heading">Home</string>
+    <string name="explore_heading">Explore</string>
+    <string name="trips_heading">Trips</string>
+    <string name="preference">Preference</string>
+    <string name="preferences_heading">Preferences</string>
 </resources>
