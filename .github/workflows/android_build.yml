@@ -10,7 +10,7 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     continue-on-error: true
 
     steps:
@@ -35,17 +35,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-#      - name: Run Tests
-#        run: ./gradlew test
-#
-#      - name: Build Project
-#        run: ./gradlew build
+      - name: Run Tests
+        run: ./gradlew test
 
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 34
-          script: ./gradle connectedAndroidTest
+      - name: Build Project
+        run: ./gradlew build
+
+#      - name: Instrumentation Tests
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 34
+#          script: ./gradle connectedAndroidTest
 
 
 
