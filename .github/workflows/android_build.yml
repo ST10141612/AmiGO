@@ -24,11 +24,8 @@ jobs:
       - name: Grant execute permissions for gradlew
         run: chmod +x gradlew
 
-      - name: Grant execution permission for tests
-        run: chmod +x ./app/src/test/java/com/example/amigo/ExampleUnitTest.kt
-
       - name: Run Tests
-        run: app/src/test/java/com/example/amigo/ExampleUnitTest.kt
+        run: ./gradlew test
 
       - name: Build Project
         run: ./gradlew assemble
