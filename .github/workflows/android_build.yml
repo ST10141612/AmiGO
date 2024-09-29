@@ -1,0 +1,29 @@
+#this code was adapted from Youtube
+#https://www.youtube.com/watch?v=K9w01h4-Wnc
+#goobar
+#https://www.youtube.com/@goobar
+
+name: Android Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Run Tests
+        run: ./gradlew test
+
+      - name: Build Project
+        run: ./gradlew assemble
+

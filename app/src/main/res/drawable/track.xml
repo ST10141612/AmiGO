@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--    ///this code was adapted from Youtube-->
+    <!--    ///https://www.youtube.com/watch?v=94gvVpGsap8-->
+    <!--    ///Android Knowledge-->
+    <!--    ///https://www.youtube.com/@android_knowledge-->
+    <item
+        android:state_checked="true">
+        <shape
+            android:shape="rectangle">
+            <solid
+                android:color="@color/darkgray"/>
+            <size
+                android:height="8dp"/>
+            <corners
+                android:radius="100dp"/>
+        </shape>
+    </item>
+
+    <item
+        android:state_checked="false">
+        <shape
+            android:shape="rectangle">
+            <solid
+                android:color="@color/amigogreen"/>
+            <size
+                android:height="8dp"/>
+            <corners
+                android:radius="100dp"/>
+        </shape>
+    </item>
+
+</selector>

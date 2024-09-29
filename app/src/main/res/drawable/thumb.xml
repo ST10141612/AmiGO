@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--    ///this code was adapted from Youtube-->
+    <!--    ///https://www.youtube.com/watch?v=94gvVpGsap8-->
+    <!--    ///Android Knowledge-->
+    <!--    ///https://www.youtube.com/@android_knowledge-->
+    <item
+        android:state_checked="true"
+        android:drawable="@drawable/thumbtrue"/>
+
+    <item
+        android:state_checked="false"
+        android:drawable="@drawable/thumbfalse"/>
+
+</selector>
