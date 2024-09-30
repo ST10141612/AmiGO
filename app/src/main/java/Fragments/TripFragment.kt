@@ -15,14 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.amigo.CreateTripActivity
 import com.example.amigo.R
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 
 class TripFragment : Fragment() {
 
     private var columnCount = 1
     private var viewModel = TripViewModel()
-    private var loggedInUserId = 0
+    //private var loggedInUserId = 0
     private lateinit var btnCreateNewTrip: Button
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,9 @@ class TripFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        auth = Firebase.auth
+        var currentUser = auth.currentUser
 
         val view = inflater.inflate(R.layout.trip_item_list, container, false)
         btnCreateNewTrip = view.findViewById(R.id.btnCreateTrip)
@@ -47,7 +54,9 @@ class TripFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                viewModel.getTrips(loggedInUserId)
+                if (currentUser != null) {
+                    viewModel.getTrips(currentUser.uid)
+                }
                 val tripsObserver = Observer<List<Trip>?> {trips ->
                     if (trips.isNullOrEmpty())
                     {
