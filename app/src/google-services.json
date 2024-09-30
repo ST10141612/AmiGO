@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "783620285662",
+    "project_id": "amigo-991b3",
+    "storage_bucket": "amigo-991b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783620285662:android:5d32cab5e56f6167018e4f",
+        "android_client_info": {
+          "package_name": "com.example.amigo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLGBRFQCtlg4DwUscwv8gp0DpnSi-56bI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
