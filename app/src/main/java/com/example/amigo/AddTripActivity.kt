@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
+import java.util.UUID
 
 class AddTripActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddTripBinding
@@ -51,10 +52,10 @@ class AddTripActivity : AppCompatActivity() {
     private val calendar = Calendar.getInstance()
     private val tripViewModel: TripViewModel = TripViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityAddTripBinding.inflate(layoutInflater)
         //activityLocationAutoCompleteFrag = AutocompleteSupportFragment()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_trip)
+        binding = ActivityAddTripBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         txtActivityName = binding.txtActivityName
         txtActivityDate = binding.txtActivityDate
@@ -86,6 +87,7 @@ class AddTripActivity : AppCompatActivity() {
                 activityAddress = place.formattedAddress
                 activityLatitude = place.location.latitude
                 activityLongitude = place.location.longitude
+                Log.i("Place Selection", "Selected $place")
             }
 
             override fun onError(status: Status) {
@@ -192,14 +194,16 @@ class AddTripActivity : AppCompatActivity() {
 
     private fun saveActivity()
     {
-        val tripId = intent.getIntExtra("TripId", 0)
+        val tripId = intent.getStringExtra("TripId")
         activityName = txtActivityName.text.toString()
         val newActivity = Activity(
+            activityId = UUID.randomUUID().toString(),
+            tripId=tripId,
             name=activityName,
             category=activityCategory,
-            startDate=activityDate,
-            startTime=activityStartTime,
-            endTime=activityEndTime,
+            startDate=activityDate.toString(),
+            startTime=activityStartTime.toString(),
+            endTime=activityEndTime.toString(),
             address=activityAddress,
             latitude=activityLatitude,
             longitude=activityLongitude

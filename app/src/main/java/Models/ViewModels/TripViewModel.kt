@@ -14,13 +14,13 @@ class TripViewModel: ViewModel() {
     private var _trip = MutableLiveData<Trip?>()
     var trips: LiveData<List<Trip>?> = _trips
     var trip: LiveData<Trip?> = _trip
-    private var tripCount: Int? = trips.value?.size
 
     private var _activities = MutableLiveData<List<Activity>?>()
     var activities: LiveData<List<Activity>?> = _activities
-    private var activityCount: Int? = activities.value?.size
 
-    fun getTrip(tripId: Int){
+
+    fun getTrip(tripId: String){
+
         viewModelScope.launch {
             val tripData = retrofitTripManagerClient.tripAPI?.getTrip(tripId)
             _trip.value = tripData
@@ -32,9 +32,9 @@ class TripViewModel: ViewModel() {
             val tripData = ArrayList<Trip>()
             if (tripList != null) {
                 for(trip in tripList) {
-                    if(trip.userId?.equals(userId)!!) {
+                    //if(trip.userId?.equals(userId) == true) {
                         tripData.add(trip)
-                    }
+                    //}
                 }
             }
             _trips.value = tripData
@@ -42,9 +42,9 @@ class TripViewModel: ViewModel() {
     }
 
     fun createTrip(trip: Trip): Trip{
-        viewModelScope.launch {
-            retrofitTripManagerClient.tripAPI?.createTrip(trip)
-        }
+            viewModelScope.launch {
+                retrofitTripManagerClient.tripAPI?.createTrip(trip)
+            }
         return trip
     }
 
@@ -55,26 +55,19 @@ class TripViewModel: ViewModel() {
         return activity
     }
 
-    fun getActivities(tripId: Int){
+    fun getActivities(tripId: String){
         viewModelScope.launch {
             val activityList = retrofitTripManagerClient.tripAPI?.getActivities()
             val activityData = ArrayList<Activity>()
             if (activityList != null) {
                 for(activity in activityList) {
-                    if(activity.tripId?.equals(tripId)!!) {
+                    //if(activity.tripId?.equals(tripId)!!) {
                         activityData.add(activity)
-                    }
+                    //}
                 }
             }
             _activities.value = activityData
         }
     }
 
-    fun getNumTrips(): Int?{
-        return tripCount
-    }
-
-    fun getNumActivities(): Int? {
-        return activityCount
-    }
 }

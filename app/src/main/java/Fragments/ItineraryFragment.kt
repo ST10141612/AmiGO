@@ -1,7 +1,6 @@
 package Fragments
 
 import Models.Trips.Activity
-import Models.Trips.Trip
 import Models.ViewModels.TripViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.amigo.R
 
 
-class ItineraryFragment(tripId: Int) : Fragment() {
+class ItineraryFragment(tripId: String) : Fragment() {
 
     private var columnCount = 1
     private var viewModel = TripViewModel()
@@ -23,13 +22,13 @@ class ItineraryFragment(tripId: Int) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.itinerary_item_list, container, false)
 
         // Set the adapter
@@ -39,12 +38,11 @@ class ItineraryFragment(tripId: Int) : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-
-                viewModel.getTrip(tripId)
-                val tripObserver = Observer<Trip?> { trip ->
-                    adapter = ItineraryRecyclerViewAdapter(trip?.activities as List<Activity>)
+                viewModel.getActivities(tripId)
+                val activitiesObserver = Observer<List<Activity>?> { activities ->
+                    adapter = ItineraryRecyclerViewAdapter(activities as List<Activity>)
                 }
-                viewModel.trip.observe(viewLifecycleOwner, tripObserver)
+                viewModel.activities.observe(viewLifecycleOwner, activitiesObserver)
             }
         }
         return view

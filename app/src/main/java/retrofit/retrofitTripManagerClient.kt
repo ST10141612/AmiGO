@@ -7,7 +7,7 @@ object retrofitTripManagerClient {
     var retrofit: Retrofit? = null
         get() {
             if(field == null) field = Retrofit.Builder()
-                .baseUrl("https://us-central1-testapi-5892a.cloudfunctions.net/app")
+                .baseUrl("https://us-central1-testapi-5892a.cloudfunctions.net/app/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             return field

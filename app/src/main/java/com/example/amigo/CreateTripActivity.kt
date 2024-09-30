@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import java.time.LocalDate
 import java.util.Calendar
+import java.util.UUID
 
 class CreateTripActivity : AppCompatActivity() {
 
@@ -55,19 +56,6 @@ class CreateTripActivity : AppCompatActivity() {
         if (!Places.isInitialized()) {
             Places.initializeWithNewPlacesApiEnabled(applicationContext, BuildConfig.MAPS_API_KEY)
         }
-        /*val autoCompleteFrag = supportFragmentManager?.findFragmentById(R.id.trip_location_autocomplete_fragment) as? AutocompleteSupportFragment
-        autoCompleteFrag?.setPlaceFields(listOf(Place.Field.ID, Place.Field.DISPLAY_NAME, Place.Field.LOCATION, Place.Field.RATING, Place.Field.TYPES))
-        autoCompleteFrag?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            override fun onPlaceSelected(place: Place) {
-                tripLocation = place.location
-            }
-
-            override fun onError(status: Status) {
-                Log.i("Place Selection Error", "An error occurred: $status")
-            }
-        })
-
-         */
 
         auth = Firebase.auth
 
@@ -157,11 +145,11 @@ class CreateTripActivity : AppCompatActivity() {
         tripDescription = txtTripDescription.text.toString()
 
         val newTrip: Trip = Trip(
-            tripId = tripViewModel.getNumTrips()?.plus(1),
+            tripId = UUID.randomUUID().toString(),
             userId = currentUserId,
             name = tripName,
-            startDate = tripStartDate,
-            endDate = tripEndDate,
+            startDate = tripStartDate.toString(),
+            endDate = tripEndDate.toString(),
             description = tripDescription
             )
 
