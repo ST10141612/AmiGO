@@ -204,7 +204,7 @@ class AddTripActivity : AppCompatActivity() {
             latitude=activityLatitude,
             longitude=activityLongitude
         )
-        tripViewModel.addTripActivity(tripId, newActivity)
+        tripViewModel.createActivity(newActivity)
         Toast.makeText(
             this,
             "Successfully added activity to itinerary",

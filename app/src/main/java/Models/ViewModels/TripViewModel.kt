@@ -18,7 +18,7 @@ class TripViewModel: ViewModel() {
 
     private var _activities = MutableLiveData<List<Activity>?>()
     var activities: LiveData<List<Activity>?> = _activities
-    private var activityCount: Int? = trips.value?.size
+    private var activityCount: Int? = activities.value?.size
 
     fun getTrip(tripId: Int){
         viewModelScope.launch {
@@ -72,5 +72,9 @@ class TripViewModel: ViewModel() {
 
     fun getNumTrips(): Int?{
         return tripCount
+    }
+
+    fun getNumActivities(): Int? {
+        return activityCount
     }
 }
