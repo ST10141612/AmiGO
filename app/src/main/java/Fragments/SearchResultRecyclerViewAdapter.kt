@@ -17,11 +17,6 @@ import java.io.InputStream
 import java.net.URL
 import kotlin.concurrent.thread
 
-
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class SearchResultRecyclerViewAdapter(
     private val values: List<Place>
 ) : RecyclerView.Adapter<SearchResultRecyclerViewAdapter.ViewHolder>() {

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateTripActivity"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/create_trip_heading_text"
+                android:textSize="20sp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lbl_trip_name"
+                android:textSize="10sp"
+                android:layout_marginBottom="5dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTripName"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lbl_trip_name"
+                android:textSize="10sp"
+                android:layout_marginBottom="5dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTripDescription"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/trip_start_date_text"
+                android:textSize="10sp"
+                android:layout_marginBottom="2dp"/>
+            <TextView
+                android:id="@+id/txtStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text=""
+                android:textSize="8sp"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btnPickStartDate"
+                android:layout_width="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="Pick Start Date"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/quantum_lightgreen700"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/trip_end_date_text"
+                android:textSize="10sp"
+                android:layout_marginBottom="2dp"/>
+            <TextView
+                android:id="@+id/txtEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text=""
+                android:textSize="8sp"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btnPickEndDate"
+                android:layout_width="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/quantum_lightgreen700"
+                android:text="Pick End Date"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lbl_pick_trip_image"
+                android:textSize="10sp"
+                android:layout_marginBottom="5dp"/>
+            <Button
+                android:id="@+id/btnPickDisplayPicture"
+                android:layout_width="170dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/quantum_lightgreen900"
+                android:text="Pick Display Image"
+                android:layout_marginBottom="20dp"/>
+
+            <ImageView
+                android:id="@+id/iv_preview_trip_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+           <!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:map="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/trip_location_autocomplete_fragment"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp" />-->
+
+            <Button
+                android:id="@+id/btnSaveTrip"
+                android:layout_width="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/quantum_lightblue700"
+                android:text="Save Trip"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

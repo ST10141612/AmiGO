@@ -15,21 +15,27 @@ class ExplorePlacesViewModel(placesClient: PlacesClient): ViewModel() {
     private var _placeResults = MutableLiveData<List<Place>>()
     var placeResults: LiveData<List<Place>> = _placeResults
 
-    /*fun getSearchResults(location: String, type: String)
-    {
-        viewModelScope.launch {
-            val nearbySearchResult = retrofitNearbySearchClient.searchResult?.
-                getNearbyPlaces(location, type, BuildConfig.MAPS_API_KEY)
-            if (!nearbySearchResult?.results.isNullOrEmpty()) {
-                _searchResults = nearbySearchResult?.results!!
-                searchResults = _searchResults
+    private var restaurantTypes = listOf("restaurant","cafe","bar","bakery")
+    private var hotelTypes = listOf("bed_and_breakfast", "extended_stay_hotel", "hotel", "lodging", "resort_hotel")
+    private var entertainmentTypes = listOf("aquarium", "amusement_park", "movie_theater", "tourist_attraction",
+        "zoo", "historical_landmark", "cultural_center")
+
+    fun getSearchResults(location: LatLng, type: String){
+        var selectedTypes: List<String>
+        when(type){
+            "Restaurant" -> {
+                selectedTypes = restaurantTypes
+            }
+            "Hotels" -> {
+                selectedTypes = hotelTypes
+            }
+            "Activities" -> {
+                selectedTypes = entertainmentTypes
+            }
+            else -> {
+                selectedTypes = restaurantTypes
             }
         }
-    }
-
-     */
-    fun getSearchResults(location: LatLng, type: String){
-        Log.i("Debugging", "Inside the get search results method")
         /*
             The code below was taken from the google maps platform documentation
             Title: Nearby Search (New)
@@ -41,13 +47,12 @@ class ExplorePlacesViewModel(placesClient: PlacesClient): ViewModel() {
             Place.Field.FORMATTED_ADDRESS, Place.Field.ADR_FORMAT_ADDRESS)
         var circle: CircularBounds = CircularBounds.newInstance(location, 1000.0)
         var searchNearbyRequest: SearchNearbyRequest = SearchNearbyRequest.builder(circle, placeFields)
-            .setIncludedPrimaryTypes(listOf(type))
+            .setIncludedPrimaryTypes(selectedTypes)
             .setMaxResultCount(10)
             .build()
 
         placesClient.searchNearby(searchNearbyRequest)
             .addOnSuccessListener { response ->
-                Log.i("Debugging", "Successfully retrieved places")
                 var foundPlaces: List<Place> = response.places
                 _placeResults.value = foundPlaces
             }
@@ -58,6 +63,6 @@ class ExplorePlacesViewModel(placesClient: PlacesClient): ViewModel() {
             .addOnCanceledListener {
                 Log.i("Debugging", "Nearby search cancelled")
             }
-        //Log.i("Checking", "Is the amount of places still ${placeResults.value?.size}")
+
     }
 }

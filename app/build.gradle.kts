@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
+
 }
 
 secrets {
@@ -74,6 +75,7 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.common.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,6 +83,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
-
     implementation ("com.google.android.gms:play-services-maps:19.0.0")
+    implementation ("com.google.firebase:firebase-core:21.1.1")
 }
+
+apply(plugin = "com.google.gms.google-services")
