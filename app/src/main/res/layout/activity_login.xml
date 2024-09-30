@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/ScreenBackground"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -26,7 +27,8 @@
         android:layout_height="649dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
@@ -36,6 +38,7 @@
             android:layout_marginBottom="20sp"
             android:gravity="center"
             android:text="@string/login"
+            style="@style/TextColor"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -48,7 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
-                android:hint="@string/username" />
+                android:hint="@string/email"
+                style="@style/TextColor"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,30 +64,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
-                android:hint="@string/password" />
+                android:hint="@string/password"
+                style="@style/TextColor"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login" />
+            android:text="@string/login"
+            style="@style/TextColor"/>
 
         <LinearLayout
-            android:layout_centerInParent="true"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/border">
 
             <Button
                 android:id="@+id/btnGoogle"
-                android:textAllCaps="false"
                 android:layout_width="120dp"
                 android:layout_height="35dp"
                 android:background="@color/amigogreen"
-                android:text="Sign up with Google"
                 android:onClick="signingGoogle"
-                android:textColor="@color/white"
+                android:text="Sign up with Google"
+                android:textAllCaps="false"
+                style="@style/TextColor"
                 android:textSize="11sp" />
 
             <ImageView
@@ -98,14 +104,14 @@
                 android:src="@drawable/google" />
 
 
-
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up" />
+            android:text="@string/sign_up"
+            style="@style/TextColor"/>
 
 
     </LinearLayout>

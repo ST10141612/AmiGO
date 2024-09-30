@@ -55,6 +55,7 @@
     <string name="btn_pick_end_time">Pick End Time</string>
     <string name="btn_save_activity">Save Activity</string>
     <string name="txt_create_new_trip">Create a new Trip</string>
+    <string name="email">Email</string>
 
 
 </resources>

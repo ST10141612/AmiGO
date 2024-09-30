@@ -33,7 +33,7 @@
         android:layout_width="263dp"
         android:layout_height="58dp"
         style="@style/TextColor"
-        android:layout_marginHorizontal="45dp"
+        android:layout_marginHorizontal="65dp"
         android:layout_marginVertical="399dp"
         android:text="@string/preference" />
 
@@ -42,7 +42,7 @@
             android:layout_width="263dp"
             android:layout_height="58dp"
             style="@style/TextColor"
-            android:layout_marginHorizontal="45dp"
+            android:layout_marginHorizontal="65dp"
             android:layout_marginVertical="499dp"
             android:text="@string/logout" />
 

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".ExplorePlacesActivity">
+    tools:context=".ExplorePlacesActivity"
+    style="@style/ScreenBackground">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
         android:text="@string/lblSearchResults"
+        style="@style/TextColor"
         android:textSize="17dp"
         android:textStyle="bold"/>
     <FrameLayout
