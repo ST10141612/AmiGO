@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.example.amigo.databinding.FragmentSettingsBinding
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -22,8 +24,9 @@ class SettingsFragment : Fragment() {
 
     private lateinit var buttonLogOut: Button
     private lateinit var buttonPreferences: Button
-    private lateinit var textView: TextView
+    private lateinit var userDetails: TextView
     private lateinit var auth: FirebaseAuth
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,7 @@ class SettingsFragment : Fragment() {
         auth = Firebase.auth
         buttonLogOut = binding.btnLogout
         buttonPreferences = binding.btnPreferences
-        textView = binding.tvUserDetails
+        userDetails = binding.tvUserDetails
 
         val user = auth.currentUser
         if(user == null){
@@ -43,8 +46,9 @@ class SettingsFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         } else {
-            textView.text = user.email
+            userDetails.text = user.email
         }
+
 
         buttonLogOut.setOnClickListener {
             Firebase.auth.signOut()
