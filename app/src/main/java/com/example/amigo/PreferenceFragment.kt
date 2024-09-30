@@ -1,15 +1,21 @@
 package com.example.amigo
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.NightMode
 import androidx.appcompat.widget.SwitchCompat
-import androidx.fragment.app.Fragment
 import com.example.amigo.databinding.FragmentPreferenceBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 ///this code was adapted from Youtube
 ///https://www.youtube.com/watch?v=94gvVpGsap8
@@ -24,6 +30,7 @@ class PreferenceFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor :SharedPreferences.Editor
     private lateinit var buttonBack: Button
+
 
 
     override fun onCreateView(

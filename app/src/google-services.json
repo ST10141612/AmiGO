@@ -12,7 +12,12 @@
           "package_name": "com.example.amigo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "783620285662-map1o1s0vibf4tjjtf52b9mi6vq7bjg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBLGBRFQCtlg4DwUscwv8gp0DpnSi-56bI"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783620285662-map1o1s0vibf4tjjtf52b9mi6vq7bjg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
