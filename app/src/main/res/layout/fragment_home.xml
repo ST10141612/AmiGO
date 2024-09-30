@@ -29,7 +29,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:textSize="27sp"
-            android:text="Create a new trip"
+            android:text="@string/txt_create_new_trip"
             android:layout_gravity="center"/>
         <Button
             android:id="@+id/btnCreateTrip"

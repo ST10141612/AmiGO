@@ -75,7 +75,7 @@
                 android:layout_width="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:text="Pick Start Date"
+                android:text="@string/btn_pick_end_date"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/quantum_lightgreen700"/>
 
@@ -101,7 +101,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/quantum_lightgreen700"
-                android:text="Pick End Date"
+                android:text="@string/btn_pick_end_date"
                 android:layout_marginBottom="20dp"/>
 
             <TextView
@@ -117,7 +117,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/quantum_lightgreen900"
-                android:text="Pick Display Image"
+                android:text="@string/btn_pick_display_image"
                 android:layout_marginBottom="20dp"/>
 
             <ImageView
@@ -140,7 +140,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/quantum_lightblue700"
-                android:text="Save Trip"
+                android:text="@string/btn_save_trip"
                 android:layout_marginBottom="10dp"/>
 
         </LinearLayout>

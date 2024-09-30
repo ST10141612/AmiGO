@@ -31,8 +31,8 @@
     <string name="trip_end_date_text">End Date:</string>
     <string name="btn_view_trip_text">View</string>
     <string name="create_trip_heading_text">Enter Trip Details</string>
-    <string name="lbl_trip_name">Trip Name:</string>
-    <string name="lbl_trip_location">Trip Location: </string>
+    <string name="lbl_trip_name">Trip Name</string>
+    <string name="lbl_trip_location">Trip Location </string>
     <string name="lbl_trip_image">Add an image for your trip</string>
     <string name="lbl_pick_trip_image">Add an optional display picture for the trip?</string>
     <string name="lbl_trip_description">Trip Description</string>
@@ -46,5 +46,15 @@
     <string name="lbl_activity_category">Category</string>
     <string name="lbl_activity_location">Location where activity takes place</string>
     <string name="lbl_activity_details">Enter Activity Details</string>
+    <string name="btn_pick_start_date">Pick Start Date</string>
+    <string name="btn_pick_end_date">Pick End Date</string>
+    <string name="btn_pick_display_image">Pick Display Image</string>
+    <string name="btn_save_trip">Save Trip</string>
+    <string name="btn_pick_date">Pick Date</string>
+    <string name="btn_pick_start_time">Pick Start Time</string>
+    <string name="btn_pick_end_time">Pick End Time</string>
+    <string name="btn_save_activity">Save Activity</string>
+    <string name="txt_create_new_trip">Create a new Trip</string>
+
 
 </resources>
