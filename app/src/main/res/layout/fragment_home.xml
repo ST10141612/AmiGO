@@ -25,7 +25,12 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="@string/trips_fragment_heading"/>-->
-
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="27sp"
+            android:text="Create a new trip"
+            android:layout_gravity="center"/>
         <Button
             android:id="@+id/btnCreateTrip"
             android:layout_width="match_parent"

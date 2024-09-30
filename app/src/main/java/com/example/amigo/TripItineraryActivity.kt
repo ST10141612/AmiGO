@@ -45,9 +45,12 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btnAddActivity = binding.btnAddActivity
         btnAddActivity.setOnClickListener{
+            //val intent = Intent(this, AddTripActivity::class.java)
             val intent = Intent(this, AddTripActivity::class.java)
             intent.putExtra("TripId", tripId)
             startActivity(intent)
+            //viewModel.cancelAll()
+
         }
 
         btnHome = binding.btnHomeFromItinerary
