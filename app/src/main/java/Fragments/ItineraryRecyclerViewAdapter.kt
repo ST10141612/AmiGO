@@ -32,7 +32,7 @@ class ItineraryRecyclerViewAdapter(
         holder.activityDate.text = item.startDate.toString()
         holder.activityStartTime.text = item.startTime.toString()
         holder.activityEndTime.text = item.endTime.toString()
-        when(item.catetegory){
+        when(item.category){
             "Flight" -> holder.activityCategoryPic.setImageResource(R.drawable.plane_pic)
             "Outdoor" -> holder.activityCategoryPic.setImageResource(R.drawable.outdoor_pic)
             "Kids" -> holder.activityCategoryPic.setImageResource(R.drawable.childrens_activities_pic)
