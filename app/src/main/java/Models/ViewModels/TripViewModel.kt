@@ -1,82 +1,71 @@
 package Models.ViewModels
 
-import Models.Trips.Activity
 import Models.Trips.Trip
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import retrofit.retrofitTripManagerClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TripViewModel: ViewModel() {
-    private var _trips = MutableLiveData<List<Trip>?>()
-    private var _trip = MutableLiveData<Trip?>()
-    var trips: LiveData<List<Trip>?> = _trips
-    var trip: LiveData<Trip?> = _trip
-    private var _activities = MutableLiveData<List<Activity>?>()
-    var activities: LiveData<List<Activity>?> = _activities
-    private var job = Job()
-        get(){
-            if (field.isCancelled) field = Job()
-            return field
-        }
 
-    fun getTrip(tripId: String){
-
-        viewModelScope.launch {
-            val tripData = retrofitTripManagerClient.tripAPI?.getTrip(tripId)
-            _trip.value = tripData
-        }
-    }
-    fun getTrips(userId: String){
-        viewModelScope.launch(job) {
-            val tripList = retrofitTripManagerClient.tripAPI?.getTrips()
-            val tripData = ArrayList<Trip>()
-            if (tripList != null) {
-                for(trip in tripList) {
-                    //if(trip.userId?.equals(userId) == true) {
-                        tripData.add(trip)
-                    //}
-                }
+    fun createTrip(trip: Trip): Trip {
+        val call: Call<Trip>? = retrofitTripManagerClient.tripAPI?.createTrip(trip)
+        call?.enqueue(object : Callback<Trip?> {
+            override fun onResponse(call: Call<Trip?>, response: Response<Trip?>) {
+                TODO("Not yet implemented")
             }
-            _trips.value = tripData
-        }
-    }
 
-    fun createTrip(trip: Trip): Trip{
-            viewModelScope.launch(job) {
-                retrofitTripManagerClient.tripAPI?.createTrip(trip)
+            override fun onFailure(call: Call<Trip?>, p1: Throwable) {
+                Log.i("Debugging", "Unable to Create Trip")
             }
+        })
         return trip
     }
+    fun getTrip(tripId: String): LiveData<Trip?>{
+        val _trip = MutableLiveData<Trip?>()
+        val trip: LiveData<Trip?> = _trip
 
-    fun createActivity(activity: Activity): Activity{
-        viewModelScope.launch(job) {
-            retrofitTripManagerClient.tripAPI?.createActivity(activity)
-        }
-        return activity
-    }
-
-    fun getActivities(tripId: String){
-        viewModelScope.launch(job) {
-            val activityList = retrofitTripManagerClient.tripAPI?.getActivities()
-            val activityData = ArrayList<Activity>()
-            if (activityList != null) {
-                for(activity in activityList) {
-                    if(activity.tripId?.equals(tripId)!!) {
-                        activityData.add(activity)
-                    }
-                }
+        val call: Call<Trip>? = retrofitTripManagerClient.tripAPI?.getTrip(tripId)
+        call?.enqueue(object: Callback<Trip?> {
+            override fun onResponse(
+                call: Call<Trip?>,
+                response: Response<Trip?>
+            ) {
+                _trip.value = response.body()
             }
-            _activities.value = activityData
-        }
+            override fun onFailure(p0: Call<Trip?>, p1: Throwable) {
+                Log.i("Debugging", "Unable to get Trip")
+            }
+        })
+        return trip
+    }
+    fun getTrips(): LiveData<ArrayList<Trip>?> {
+        val _trips = MutableLiveData<ArrayList<Trip>?>()
+        val trips: LiveData<ArrayList<Trip>?> = _trips
+
+        val call: Call<ArrayList<Trip>>? = retrofitTripManagerClient.tripAPI?.getTrips()
+
+        call?.enqueue(object: Callback<ArrayList<Trip>?> {
+            override fun onResponse(
+                call: Call<ArrayList<Trip>?>,
+                response: Response<ArrayList<Trip>?>
+            ) {
+                    _trips.value = response.body()
+            }
+            override fun onFailure(p0: Call<ArrayList<Trip>?>, p1: Throwable) {
+                Log.i("Debugging", "Unable to get trips")
+            }
+        })
+
+        return trips
     }
 
-    fun cancelAll(){
-        job.cancel()
-    }
+
+
 
 
 }

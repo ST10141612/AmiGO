@@ -1,7 +1,7 @@
 package retrofit
 
-import Models.Trips.Activity
 import Models.Trips.Trip
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -9,26 +9,18 @@ import retrofit2.http.Path
 
 interface ITripManager {
     @GET("api/trips/read/{tripId}")
-    suspend fun getTrip (
+    fun getTrip (
         @Path("tripId") tripId: String?
-    ): Trip?
+    ): Call<Trip>?
 
     @GET("api/trips/read")
-    suspend fun getTrips (
-    ): ArrayList<Trip>?
+    fun getTrips (
+    ): Call<ArrayList<Trip>>?
 
     @POST("api/trips/create")
-    suspend fun createTrip (
+    fun createTrip (
         @Body trip: Trip
-    ): Trip? // Maybe remove these return values from all except the reading methods
+    ): Call<Trip>? // Maybe remove these return values from all except the reading methods
 
-    @GET("api/activities/read")
-    suspend fun getActivities (
-    ): ArrayList<Activity>?
-
-    @POST("api/activities/create")
-    suspend fun createActivity (
-        @Body activity: Activity
-    ): Activity?
 
 }

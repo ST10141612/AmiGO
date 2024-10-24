@@ -49,18 +49,11 @@ class TripFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                if (currentUser != null) {
-                    viewModel.getTrips(currentUser.uid)
+                val tripObserver = Observer<ArrayList<Trip>?>{newTrips ->
+                    adapter = TripRecyclerViewAdapter(newTrips as List<Trip>)
+                }
+                viewModel.getTrips().observe(viewLifecycleOwner, tripObserver)
 
-                }
-                val tripsObserver = Observer<List<Trip>?> {trips ->
-                    if (trips.isNullOrEmpty())
-                    {
-                        adapter = TripRecyclerViewAdapter(listOf<Trip>())
-                    }
-                    adapter = TripRecyclerViewAdapter(trips as List<Trip>)
-                }
-                viewModel.trips.observe(viewLifecycleOwner, tripsObserver)
             }
 
         }

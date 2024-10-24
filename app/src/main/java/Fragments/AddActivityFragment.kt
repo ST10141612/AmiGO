@@ -1,7 +1,7 @@
 package Fragments
 
 import Models.Trips.Activity
-import Models.ViewModels.TripViewModel
+import Models.ViewModels.ActivityViewModel
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -50,7 +50,7 @@ class AddActivityFragment(tripId: String) : Fragment() {
     private lateinit var btnSave: Button
 
     private val calendar = Calendar.getInstance()
-    private val tripViewModel: TripViewModel = TripViewModel()
+    private val activityViewModel: ActivityViewModel = ActivityViewModel()
     private val tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -226,7 +226,7 @@ class AddActivityFragment(tripId: String) : Fragment() {
             //latitude=activityLatitude,
             //longitude=activityLongitude
         )
-        tripViewModel.createActivity(newActivity)
+        activityViewModel.createActivity(newActivity)
         Toast.makeText(
             this.requireContext(),
             "Successfully added activity to itinerary",

@@ -1,7 +1,9 @@
 package com.example.amigo
 
 import Fragments.ItineraryFragment
-import Models.Trips.Trip
+import Fragments.ItineraryFragmentFactory
+import Models.Trips.Activity
+import Models.ViewModels.ActivityViewModel
 import Models.ViewModels.TripViewModel
 import android.content.Intent
 import android.os.Bundle
@@ -30,7 +32,10 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var btnAddActivity: Button
     private lateinit var viewModel: TripViewModel
     private var tripId: String = ""
+
+    private val itineraryFragmentFactory = ItineraryFragmentFactory(tripId)
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportFragmentManager.fragmentFactory = itineraryFragmentFactory
         super.onCreate(savedInstanceState)
         binding = ActivityTripItineraryBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -60,11 +65,8 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
-
         viewModel.getTrip(tripId)
-        Log.i("Debugging in Trip Itinerary Activity", "Attempting to instantiate itinerary fragment")
         itineraryFragment = ItineraryFragment(tripId)
-        Log.i("Debugging in Trip Itinerary Activity", "Instantiated itinerary fragment")
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -75,31 +77,39 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         activitiesMap = googleMap
-
+        val activityViewModel = ActivityViewModel()
         val boundBuilder: LatLngBounds.Builder = LatLngBounds.builder()
-        val tripObserver = Observer<Trip?> { trip ->
-            if (!trip?.activities.isNullOrEmpty()) {
-                for (activity in trip?.activities!!) {
-                    var activityLocation = LatLng(activity.latitude!!, activity.longitude!!)
-                    activitiesMap.addMarker(
-                        MarkerOptions().position(activityLocation).title(activity.name)
-                    )
-                    boundBuilder.include(activityLocation)
+        val activityObserver = Observer<ArrayList<Activity>?> { activities ->
+            if (activities != null) {
+                for (activity in activities) {
+                    if(activity.latitude != null && activity.longitude != null) {
+                        val activityLocation = LatLng(activity.latitude!!, activity.longitude!!)
+                        activitiesMap.addMarker(
+                            MarkerOptions().position(activityLocation).title(activity.name)
+                        )
+                        boundBuilder.include(activityLocation)
+                    }
                 }
-
+            }
+            try {
+                val tempLocation = LatLng(26.2056, 28.0337)
+                boundBuilder.include(tempLocation)
                 val bounds: LatLngBounds = boundBuilder.build()
                 activitiesMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5))
             }
+            catch (e:Exception)
+            {
+                Log.i("Debugging", "None of the points have coordinates")
+            }
+
         }
-        viewModel.trip.observeForever(tripObserver)
+        activityViewModel.getActivities(tripId).observe(this, activityObserver)
 
     }
 
     private fun loadItineraryFragment(fragment: ItineraryFragment) {
-        Log.i("Debugging in Trip Itinerary Activity", "Loading Itinerary Fragment")
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.trip_itinerary_container, fragment)
         transaction.commit()
-        Log.i("Debugging in Trip Itinerary Activity", "Loaded Itinerary Fragment")
     }
 }

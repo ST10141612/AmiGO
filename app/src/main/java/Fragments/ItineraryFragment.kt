@@ -1,9 +1,8 @@
 package Fragments
 
 import Models.Trips.Activity
-import Models.ViewModels.TripViewModel
+import Models.ViewModels.ActivityViewModel
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,19 +17,17 @@ import com.example.amigo.R
 class ItineraryFragment(tripId: String) : Fragment() {
 
     private var columnCount = 1
-    private var viewModel = TripViewModel()
+    private var viewModel = ActivityViewModel()
     private var tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("Debugging in Itinerary Fragment", "Creating Itinerary Fragment")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.i("Debugging in Itinerary Fragment", "Creating Itinerary Fragment View")
         val view = inflater.inflate(R.layout.itinerary_item_list, container, false)
 
         // Set the adapter
@@ -40,14 +37,24 @@ class ItineraryFragment(tripId: String) : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                viewModel.getActivities(tripId)
-                val activitiesObserver = Observer<List<Activity>?> { activities ->
+                val activityObserver = Observer<ArrayList<Activity>?>{ activities ->
                     adapter = ItineraryRecyclerViewAdapter(activities as List<Activity>)
                 }
-                viewModel.activities.observe(viewLifecycleOwner, activitiesObserver)
+                viewModel.getActivities(tripId).observe(viewLifecycleOwner, activityObserver)
             }
         }
         return view
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(tripId: String) =
+            ItineraryFragment(tripId).apply {
+                arguments = Bundle().apply {
+                    putString(tripId, tripId)
+
+                }
+            }
     }
 
 }
