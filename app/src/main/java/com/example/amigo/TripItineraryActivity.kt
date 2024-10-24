@@ -1,7 +1,6 @@
 package com.example.amigo
 
 import Fragments.ItineraryFragment
-import Fragments.ItineraryFragmentFactory
 import Models.Trips.Activity
 import Models.ViewModels.ActivityViewModel
 import Models.ViewModels.TripViewModel
@@ -33,41 +32,33 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var viewModel: TripViewModel
     private var tripId: String = ""
 
-    private val itineraryFragmentFactory = ItineraryFragmentFactory(tripId)
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportFragmentManager.fragmentFactory = itineraryFragmentFactory
         super.onCreate(savedInstanceState)
         binding = ActivityTripItineraryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (!Places.isInitialized()) {
             Places.initializeWithNewPlacesApiEnabled(applicationContext, BuildConfig.MAPS_API_KEY)
         }
-        val placesClient = Places.createClient(this)
-
         txtTripName = binding.txtTripName
         txtTripName.text = intent.getStringExtra("TripName")
         viewModel = TripViewModel()
         tripId = intent.getStringExtra("TripId")!!
-
         btnAddActivity = binding.btnAddActivity
         btnAddActivity.setOnClickListener{
-
             val intent = Intent(this, AddTripActivity::class.java)
             intent.putExtra("TripId", tripId)
             startActivity(intent)
-
-
         }
-
         btnHome = binding.btnHomeFromItinerary
         btnHome.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
         viewModel.getTrip(tripId)
-        itineraryFragment = ItineraryFragment(tripId)
-
+        val bundle = Bundle()
+        bundle.putString("tripId", tripId)
+        itineraryFragment = ItineraryFragment()
+        itineraryFragment.arguments = bundle
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.activitiesMap) as SupportMapFragment

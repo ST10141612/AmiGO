@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.amigo.R
 
 
-class ItineraryFragment(tripId: String) : Fragment() {
+class ItineraryFragment() : Fragment() {
 
     private var columnCount = 1
     private var viewModel = ActivityViewModel()
-    private var tripId = tripId
+    //private var tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class ItineraryFragment(tripId: String) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.itinerary_item_list, container, false)
-
+        val tripId: String? = this.arguments?.getString("tripId")
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -40,21 +40,13 @@ class ItineraryFragment(tripId: String) : Fragment() {
                 val activityObserver = Observer<ArrayList<Activity>?>{ activities ->
                     adapter = ItineraryRecyclerViewAdapter(activities as List<Activity>)
                 }
-                viewModel.getActivities(tripId).observe(viewLifecycleOwner, activityObserver)
+
+                if (tripId != null) {
+                    viewModel.getActivities(tripId).observe(viewLifecycleOwner, activityObserver)
+                }
             }
         }
         return view
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(tripId: String) =
-            ItineraryFragment(tripId).apply {
-                arguments = Bundle().apply {
-                    putString(tripId, tripId)
-
-                }
-            }
     }
 
 }

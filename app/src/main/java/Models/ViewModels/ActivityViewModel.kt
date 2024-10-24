@@ -16,11 +16,11 @@ class ActivityViewModel: ViewModel() {
         val call: Call<Activity>? = retrofitActivityManagerClient.activityAPI?.createActivity(activity)
         call?.enqueue(object : Callback<Activity?> {
             override fun onResponse(p0: Call<Activity?>, p1: Response<Activity?>) {
-                TODO("Not yet implemented")
+                Log.i("Debugging", "Successfully created activity")
             }
 
             override fun onFailure(call: Call<Activity?>, p1: Throwable) {
-                TODO("Not yet implemented")
+                Log.i("Debugging", "Unable to create activity")
             }
         })
         return activity
