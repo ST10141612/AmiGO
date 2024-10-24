@@ -3,6 +3,7 @@ package com.example.amigo
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -60,21 +61,35 @@ class RegisterActivity : AppCompatActivity() {
             if(TextUtils.isEmpty(password)){
                 Toast.makeText(this@RegisterActivity, "Enter password", Toast.LENGTH_SHORT).show()
             }
+            Log.i("Debugging", "Here 1")
+            try
+            {
+                auth.createUserWithEmailAndPassword(username, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            Log.i("Debugging", "Here 2")
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Account created.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(intent)
 
-            auth.createUserWithEmailAndPassword(username, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
+                        } else {
 
-                        Toast.makeText(this@RegisterActivity, "Account created.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                        startActivity(intent)
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Authentication failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                    } else {
-
-                        Toast.makeText(this@RegisterActivity, "Authentication failed.", Toast.LENGTH_SHORT).show()
-
+                        }
                     }
-                }
+            }catch (e:Exception)
+            {
+                Log.i("Debugging", e.toString())
+            }
         }
     }
 }

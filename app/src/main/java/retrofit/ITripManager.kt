@@ -20,7 +20,7 @@ interface ITripManager {
     @POST("api/trips/create")
     suspend fun createTrip (
         @Body trip: Trip
-    ): Trip?
+    ): Trip? // Maybe remove these return values from all except the reading methods
 
     @GET("api/activities/read")
     suspend fun getActivities (

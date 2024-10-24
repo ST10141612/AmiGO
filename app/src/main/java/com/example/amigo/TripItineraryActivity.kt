@@ -5,6 +5,7 @@ import Models.Trips.Trip
 import Models.ViewModels.TripViewModel
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -45,11 +46,11 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btnAddActivity = binding.btnAddActivity
         btnAddActivity.setOnClickListener{
-            //val intent = Intent(this, AddTripActivity::class.java)
+
             val intent = Intent(this, AddTripActivity::class.java)
             intent.putExtra("TripId", tripId)
             startActivity(intent)
-            //viewModel.cancelAll()
+
 
         }
 
@@ -61,7 +62,9 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         viewModel.getTrip(tripId)
+        Log.i("Debugging in Trip Itinerary Activity", "Attempting to instantiate itinerary fragment")
         itineraryFragment = ItineraryFragment(tripId)
+        Log.i("Debugging in Trip Itinerary Activity", "Instantiated itinerary fragment")
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -93,8 +96,10 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun loadItineraryFragment(fragment: ItineraryFragment) {
+        Log.i("Debugging in Trip Itinerary Activity", "Loading Itinerary Fragment")
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.trip_itinerary_container, fragment)
         transaction.commit()
+        Log.i("Debugging in Trip Itinerary Activity", "Loaded Itinerary Fragment")
     }
 }
