@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "783620285662-map1o1s0vibf4tjjtf52b9mi6vq7bjg1.apps.googleusercontent.com",
+          "client_id": "783620285662-qt5ubftvm3ti3hu7tn1iano8ss0dnhqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.amigo",
+            "certificate_hash": "ec2cfb64fbb0e081cfa9f77357516b36b9938a29"
+          }
+        },
+        {
+          "client_id": "783620285662-tu6id6tjp7b60frotus5h1rumbr6316o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "783620285662-map1o1s0vibf4tjjtf52b9mi6vq7bjg1.apps.googleusercontent.com",
+              "client_id": "783620285662-c1jjcjb7sim3a9rll8s6fiuuvc0s8alt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

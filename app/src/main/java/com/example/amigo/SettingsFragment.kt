@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.amigo.databinding.FragmentSettingsBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +29,7 @@ class SettingsFragment : Fragment() {
     private lateinit var buttonPreferences: Button
     private lateinit var userDetails: TextView
     private lateinit var auth: FirebaseAuth
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
 
     override fun onCreateView(
@@ -40,6 +44,12 @@ class SettingsFragment : Fragment() {
         buttonPreferences = binding.btnPreferences
         userDetails = binding.tvUserDetails
 
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
         val user = auth.currentUser
         if(user == null){
             val intent = Intent(requireActivity(), LoginActivity::class.java)
@@ -50,11 +60,18 @@ class SettingsFragment : Fragment() {
         }
 
 
+
         buttonLogOut.setOnClickListener {
-            Firebase.auth.signOut()
-            val intent = Intent(requireActivity(), LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            Toast.makeText(requireActivity(),"Logging out", Toast.LENGTH_SHORT).show()
+            // Sign out from Firebase
+            auth.signOut()
+
+            // Sign out from Google
+            mGoogleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
         }
 
         buttonPreferences.setOnClickListener {
@@ -66,4 +83,6 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
+
+
 }
