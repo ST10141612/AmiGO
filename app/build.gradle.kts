@@ -83,6 +83,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.android.gms:play-services-maps:19.0.0")
     implementation ("com.google.firebase:firebase-core:21.1.1")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
