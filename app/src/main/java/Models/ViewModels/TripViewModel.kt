@@ -1,6 +1,7 @@
 package Models.ViewModels
 
 import Models.Trips.Trip
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,10 +11,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TripViewModel: ViewModel() {
+class TripViewModel(context: Context): ViewModel() {
+    val client = retrofitTripManagerClient(context)
 
     fun createTrip(trip: Trip): Trip {
-        val call: Call<Trip>? = retrofitTripManagerClient.tripAPI?.createTrip(trip)
+        val call: Call<Trip>? = client.tripAPI?.createTrip(trip)
         call?.enqueue(object : Callback<Trip?> {
             override fun onResponse(call: Call<Trip?>, response: Response<Trip?>) {
                 TODO("Not yet implemented")
@@ -29,7 +31,7 @@ class TripViewModel: ViewModel() {
         val _trip = MutableLiveData<Trip?>()
         val trip: LiveData<Trip?> = _trip
 
-        val call: Call<Trip>? = retrofitTripManagerClient.tripAPI?.getTrip(tripId)
+        val call: Call<Trip>? = client.tripAPI?.getTrip(tripId)
         call?.enqueue(object: Callback<Trip?> {
             override fun onResponse(
                 call: Call<Trip?>,
@@ -47,7 +49,7 @@ class TripViewModel: ViewModel() {
         val _trips = MutableLiveData<ArrayList<Trip>?>()
         val trips: LiveData<ArrayList<Trip>?> = _trips
 
-        val call: Call<ArrayList<Trip>>? = retrofitTripManagerClient.tripAPI?.getTrips()
+        val call: Call<ArrayList<Trip>>? = client.tripAPI?.getTrips()
 
         call?.enqueue(object: Callback<ArrayList<Trip>?> {
             override fun onResponse(

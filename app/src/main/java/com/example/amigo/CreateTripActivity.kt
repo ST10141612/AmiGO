@@ -45,7 +45,7 @@ class CreateTripActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private val calendar = Calendar.getInstance()
-    private val tripViewModel: TripViewModel = TripViewModel()
+    private val tripViewModel: TripViewModel = TripViewModel(applicationContext)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

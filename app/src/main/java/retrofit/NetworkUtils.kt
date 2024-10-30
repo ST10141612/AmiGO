@@ -15,7 +15,6 @@ class NetworkUtils {
     */
     fun hasNetwork(context: Context): Boolean?
     {
-        var isConnected: Boolean? = false
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             val network = connectivityManager.activeNetwork ?: return false

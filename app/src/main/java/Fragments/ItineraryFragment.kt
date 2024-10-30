@@ -17,7 +17,7 @@ import com.example.amigo.R
 class ItineraryFragment() : Fragment() {
 
     private var columnCount = 1
-    private var viewModel = ActivityViewModel()
+    private var viewModel = ActivityViewModel(requireContext())
     //private var tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {

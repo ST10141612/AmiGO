@@ -50,7 +50,7 @@ class AddActivityFragment(tripId: String) : Fragment() {
     private lateinit var btnSave: Button
 
     private val calendar = Calendar.getInstance()
-    private val activityViewModel: ActivityViewModel = ActivityViewModel()
+    private val activityViewModel: ActivityViewModel = ActivityViewModel(requireContext())
     private val tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -184,27 +184,25 @@ class AddActivityFragment(tripId: String) : Fragment() {
 
         activityCategory = "Entertainment"
 
-        if (categorySpinner != null) {
-            // Setting spinner values
-            val adapter = ArrayAdapter(
-                this.requireContext(),
-                com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-                categorySpinnerValues
-            )
-            categorySpinner.adapter = adapter
-            // The "selectedCategory" variable is set to the selected category on the spinner
-            categorySpinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    activityCategory = categorySpinnerValues[position]
-                }
+        // Setting spinner values
+        val adapter = ArrayAdapter(
+            this.requireContext(),
+            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+            categorySpinnerValues
+        )
+        categorySpinner.adapter = adapter
+        // The "selectedCategory" variable is set to the selected category on the spinner
+        categorySpinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                activityCategory = categorySpinnerValues[position]
+            }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    activityCategory = categorySpinnerValues[0]
-                }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                activityCategory = categorySpinnerValues[0]
             }
         }
 

@@ -41,7 +41,7 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         txtTripName = binding.txtTripName
         txtTripName.text = intent.getStringExtra("TripName")
-        viewModel = TripViewModel()
+        viewModel = TripViewModel(applicationContext)
         tripId = intent.getStringExtra("TripId")!!
         btnAddActivity = binding.btnAddActivity
         btnAddActivity.setOnClickListener{
@@ -68,7 +68,7 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         activitiesMap = googleMap
-        val activityViewModel = ActivityViewModel()
+        val activityViewModel = ActivityViewModel(applicationContext)
         val boundBuilder: LatLngBounds.Builder = LatLngBounds.builder()
         val activityObserver = Observer<ArrayList<Activity>?> { activities ->
             if (activities != null) {

@@ -14,13 +14,13 @@ class retrofitActivityManagerClient(context: Context) {
     private val cacheInterceptor: CacheInterceptor = CacheInterceptor()
     private val forceCacheInterceptor: ForceCacheInterceptor = ForceCacheInterceptor(context)
 
-    val okHttpClient = OkHttpClient.Builder()
+    private val okHttpClient = OkHttpClient.Builder()
         .cache(myCache)
         .addNetworkInterceptor(cacheInterceptor)
         .addInterceptor(forceCacheInterceptor)
         .build()
 
-    var retrofit: Retrofit? = null
+    private var retrofit: Retrofit? = null
         get() {
             if (field == null) field = Retrofit.Builder()
                 .baseUrl("https://us-central1-testapi-5892a.cloudfunctions.net/app/")
@@ -29,6 +29,9 @@ class retrofitActivityManagerClient(context: Context) {
                 .build()
             return field
         }
+    companion object{
+
+    }
     var activityAPI: IActivityManager? = null
         get() {
             if (field == null) field = retrofit?.create(IActivityManager::class.java)

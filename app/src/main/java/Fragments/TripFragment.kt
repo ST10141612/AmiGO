@@ -20,7 +20,7 @@ import com.google.firebase.auth.auth
 class TripFragment : Fragment() {
 
     private var columnCount = 1
-    private var viewModel = TripViewModel()
+    private var viewModel = TripViewModel(requireContext())
 
     private lateinit var auth: FirebaseAuth
 
@@ -38,7 +38,7 @@ class TripFragment : Fragment() {
     ): View? {
 
         auth = Firebase.auth
-        var currentUser = auth.currentUser
+        //var currentUser = auth.currentUser
 
         val view = inflater.inflate(R.layout.trip_item_list, container, false)
 

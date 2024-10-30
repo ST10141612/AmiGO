@@ -9,7 +9,7 @@ import com.example.amigo.databinding.ActivityAddTripBinding
 
 class AddTripActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddTripBinding
-    private val tripViewModel: TripViewModel = TripViewModel()
+    private val tripViewModel: TripViewModel = TripViewModel(applicationContext)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

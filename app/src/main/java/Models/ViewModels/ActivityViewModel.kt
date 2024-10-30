@@ -1,6 +1,7 @@
 package Models.ViewModels
 
 import Models.Trips.Activity
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,10 +11,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ActivityViewModel: ViewModel() {
-
+class ActivityViewModel(context: Context): ViewModel() {
+    //val context = context
+    private val client = retrofitActivityManagerClient(context)
     fun createActivity(activity: Activity): Activity {
-        val call: Call<Activity>? = retrofitActivityManagerClient.activityAPI?.createActivity(activity)
+        val call: Call<Activity>? = client.activityAPI?.createActivity(activity)
         call?.enqueue(object : Callback<Activity?> {
             override fun onResponse(p0: Call<Activity?>, p1: Response<Activity?>) {
                 Log.i("Debugging", "Successfully created activity")
@@ -30,7 +32,7 @@ class ActivityViewModel: ViewModel() {
         val _activities = MutableLiveData<ArrayList<Activity>?>()
         val activities: LiveData<ArrayList<Activity>?> = _activities
 
-        val call: Call<ArrayList<Activity>>? = retrofitActivityManagerClient.activityAPI?.getActivities()
+        val call: Call<ArrayList<Activity>>? = client.activityAPI?.getActivities()
 
         call?.enqueue(object: Callback<ArrayList<Activity>?> {
             override fun onResponse(

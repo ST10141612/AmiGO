@@ -14,13 +14,13 @@ class retrofitTripManagerClient(context: Context) {
     private val cacheInterceptor: CacheInterceptor = CacheInterceptor()
     private val forceCacheInterceptor: ForceCacheInterceptor = ForceCacheInterceptor(context)
 
-    val okHttpClient = OkHttpClient.Builder()
+    private val okHttpClient = OkHttpClient.Builder()
         .cache(myCache)
         .addNetworkInterceptor(cacheInterceptor)
         .addInterceptor(forceCacheInterceptor)
         .build()
 
-    var retrofit: Retrofit? = null
+    private var retrofit: Retrofit? = null
         get() {
             if (field == null) field = Retrofit.Builder()
                 .baseUrl("https://us-central1-testapi-5892a.cloudfunctions.net/app/")
