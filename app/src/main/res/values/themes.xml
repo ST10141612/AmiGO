@@ -8,6 +8,8 @@
 
     <style name="ScreenBackground"><item name="android:background">@color/white</item></style>
     <style name="TextColor"><item name="android:textColor">@color/black</item></style>
+    <style name="FingerprintStyle"><item name="android:src">@drawable/baseline_fingerprint_24_blk</item>item></style>
+
 
 
 

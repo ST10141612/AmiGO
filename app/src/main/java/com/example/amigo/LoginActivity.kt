@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amigo.databinding.ActivityLoginBinding
@@ -32,7 +33,7 @@ class LoginActivity : AppCompatActivity(), AmigoBiometricManager.Callback {
     private lateinit var buttonLogin: Button
     private lateinit var buttonsignUp: Button
     private lateinit var buttonGoogleSignIn: Button
-    private lateinit var buttonAuthBiometric: Button
+    private lateinit var buttonAuthBiometric: ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firebaseAuth: FirebaseAuth

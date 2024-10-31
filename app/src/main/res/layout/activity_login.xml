@@ -115,12 +115,13 @@
             android:text="@string/sign_up"
             style="@style/TextColor"/>
 
-        <Button
+        <ImageView
             android:id="@+id/btn_authBiometric"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Biometric Authentication"
-            style="@style/TextColor"/>
+            android:contentDescription="fingerprint"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            style="@style/FingerprintStyle"/>
 
 
     </LinearLayout>
