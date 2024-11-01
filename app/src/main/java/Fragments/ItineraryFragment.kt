@@ -17,7 +17,7 @@ import com.example.amigo.R
 class ItineraryFragment() : Fragment() {
 
     private var columnCount = 1
-    private var viewModel = ActivityViewModel(requireContext())
+
     //private var tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +28,7 @@ class ItineraryFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var viewModel = ActivityViewModel(requireContext())
         val view = inflater.inflate(R.layout.itinerary_item_list, container, false)
         val tripId: String? = this.arguments?.getString("tripId")
         // Set the adapter

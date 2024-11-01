@@ -68,12 +68,14 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         activitiesMap = googleMap
+        var numLocations = 0
         val activityViewModel = ActivityViewModel(applicationContext)
         val boundBuilder: LatLngBounds.Builder = LatLngBounds.builder()
         val activityObserver = Observer<ArrayList<Activity>?> { activities ->
             if (activities != null) {
                 for (activity in activities) {
                     if(activity.latitude != null && activity.longitude != null) {
+                        numLocations++
                         val activityLocation = LatLng(activity.latitude!!, activity.longitude!!)
                         activitiesMap.addMarker(
                             MarkerOptions().position(activityLocation).title(activity.name)
@@ -83,8 +85,10 @@ class TripItineraryActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
             try {
-                val tempLocation = LatLng(26.2056, 28.0337)
-                boundBuilder.include(tempLocation)
+                if (numLocations == 0) {
+                    val tempLocation = LatLng(26.2056, 28.0337)
+                    boundBuilder.include(tempLocation)
+                }
                 val bounds: LatLngBounds = boundBuilder.build()
                 activitiesMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5))
             }

@@ -1,5 +1,7 @@
 package Models.ViewModels
 
+import Entities.ActivityRequest
+import Entities.AppDbClient
 import Models.Trips.Activity
 import android.content.Context
 import android.util.Log
@@ -14,6 +16,7 @@ import retrofit2.Response
 class ActivityViewModel(context: Context): ViewModel() {
     //val context = context
     private val client = retrofitActivityManagerClient(context)
+    private val dbClient = AppDbClient(context)
     fun createActivity(activity: Activity): Activity {
         val call: Call<Activity>? = client.activityAPI?.createActivity(activity)
         call?.enqueue(object : Callback<Activity?> {
@@ -49,5 +52,36 @@ class ActivityViewModel(context: Context): ViewModel() {
             }
         })
         return activities
+    }
+
+    fun saveActivityOffline(activity: Activity)
+    {
+        val activityRequest: ActivityRequest = ActivityRequest.ActivityToRequest(activity)
+        //val activityRequest: ActivityRequest = ActivityRequest(activity)
+        dbClient.activityRequestDao?.insertAll(activityRequest)
+    }
+
+    fun sendOfflineRequests()
+    {
+        val savedRequests = dbClient.activityRequestDao?.getAll()
+        if (savedRequests != null) {
+            for(request in savedRequests)
+            {
+                //val savedActivity: Activity = Activity(request)
+                val savedActivity: Activity = Activity.RequestToActivity(request)
+                val call: Call<Activity>? = client.activityAPI?.createActivity(savedActivity)
+                call?.enqueue(object : Callback<Activity?> {
+                    override fun onResponse(p0: Call<Activity?>, p1: Response<Activity?>) {
+                        Log.i("Debugging", "Successfully created activity")
+                    }
+
+                    override fun onFailure(call: Call<Activity?>, p1: Throwable) {
+                        Log.i("Debugging", "Unable to create activity")
+                    }
+                })
+                dbClient.activityRequestDao?.deleteAll(request)
+            }
+
+        }
     }
 }

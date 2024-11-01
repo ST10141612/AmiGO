@@ -16,8 +16,8 @@ class retrofitActivityManagerClient(context: Context) {
 
     private val okHttpClient = OkHttpClient.Builder()
         .cache(myCache)
-        .addNetworkInterceptor(cacheInterceptor)
-        .addInterceptor(forceCacheInterceptor)
+        .addNetworkInterceptor(forceCacheInterceptor)
+        .addInterceptor(cacheInterceptor)
         .build()
 
     private var retrofit: Retrofit? = null
@@ -25,7 +25,7 @@ class retrofitActivityManagerClient(context: Context) {
             if (field == null) field = Retrofit.Builder()
                 .baseUrl("https://us-central1-testapi-5892a.cloudfunctions.net/app/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
+                //.client(okHttpClient)
                 .build()
             return field
         }

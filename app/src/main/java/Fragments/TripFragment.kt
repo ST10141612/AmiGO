@@ -1,6 +1,7 @@
 package Fragments
 
 import Models.Trips.Trip
+import Models.ViewModels.ActivityViewModel
 import Models.ViewModels.TripViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,17 +13,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.amigo.R
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
+import kotlin.concurrent.thread
 
 
 class TripFragment : Fragment() {
 
     private var columnCount = 1
-    private var viewModel = TripViewModel(requireContext())
 
-    private lateinit var auth: FirebaseAuth
+    // For if you want to attach a userId to a trip
+    //private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +36,16 @@ class TripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        auth = Firebase.auth
+        //auth = Firebase.auth
         //var currentUser = auth.currentUser
 
         val view = inflater.inflate(R.layout.trip_item_list, container, false)
+        var viewModel = TripViewModel(requireContext())
+        var activityViewModel = ActivityViewModel(requireContext())
+
+        thread{
+            activityViewModel.sendOfflineRequests()
+        }
 
         // Set the adapter
         if (view is RecyclerView) {

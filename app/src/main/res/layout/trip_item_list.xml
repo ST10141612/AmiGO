@@ -11,6 +11,7 @@
    android:layout_marginRight="16dp"
    app:layoutManager="LinearLayoutManager"
    tools:context="Fragments.TripFragment"
-   tools:listitem="@layout/trip_item" />
+   tools:listitem="@layout/trip_item"
+    android:scrollbars="vertical"/>
 
 

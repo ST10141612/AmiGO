@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
+    //id("com.android.application")
+    id("com.google.devtools.ksp")
+
 
 }
 
@@ -76,6 +79,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,6 +90,16 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:19.0.0")
     implementation ("com.google.firebase:firebase-core:21.1.1")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    // RoomDB
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // To use Kotlin annotation processing tool (kapt)
+    // kapt("androidx.room:room-compiler:$room_version")
+    // To use Kotlin Symbol Processing (KSP)
+    ksp(libs.room.compiler)
 
 }
 

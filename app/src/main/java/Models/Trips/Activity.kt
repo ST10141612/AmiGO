@@ -1,5 +1,6 @@
 package Models.Trips
 
+import Entities.ActivityRequest
 import com.google.gson.annotations.SerializedName
 
 data class Activity(
@@ -14,4 +15,22 @@ data class Activity(
     @SerializedName("Address")      var address     : String? = null,
     @SerializedName("Latitude")     var latitude    : Double? = null,
     @SerializedName("Longitude")    var longitude   : Double? = null,
-)
+) {
+    companion object Functions {
+        fun RequestToActivity(request: ActivityRequest): Activity {
+            val newActivity: Activity = Activity(
+                activityId = request.activityId,
+                tripId = request.tripId,
+                name = request.name,
+                category = request.category,
+                startDate = request.startDate,
+                startTime = request.startTime,
+                endTime = request.endTime,
+                address = request.address,
+                latitude = request.latitude,
+                longitude = request.longitude,
+            )
+            return newActivity
+        }
+    }
+}

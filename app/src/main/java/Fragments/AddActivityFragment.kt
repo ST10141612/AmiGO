@@ -18,14 +18,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.amigo.BuildConfig
+import com.example.amigo.R
 import com.example.amigo.TripItineraryActivity
 import com.example.amigo.databinding.FragmentAddActivityBinding
+import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.textfield.TextInputEditText
+import retrofit.NetworkUtils
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.Calendar
 import java.util.UUID
+import kotlin.concurrent.thread
 
 class AddActivityFragment(tripId: String) : Fragment() {
     //, activityAddress: String, latitude: Double, longitude:Double
@@ -35,9 +42,9 @@ class AddActivityFragment(tripId: String) : Fragment() {
     private lateinit var activityDate: LocalDate
     private lateinit var activityStartTime: LocalTime
     private lateinit var activityEndTime: LocalTime
-    //private var activityAddress = activityAddress
-    //private var activityLatitude = latitude
-    //private var activityLongitude = longitude
+    private var activityAddress: String? = null
+    private var activityLatitude: Double? = null
+    private var activityLongitude: Double? = null
 
     private lateinit var txtActivityName: TextInputEditText
     private lateinit var categorySpinner: Spinner
@@ -49,8 +56,9 @@ class AddActivityFragment(tripId: String) : Fragment() {
     private lateinit var btnPickEndTime: Button
     private lateinit var btnSave: Button
 
+
     private val calendar = Calendar.getInstance()
-    private val activityViewModel: ActivityViewModel = ActivityViewModel(requireContext())
+    private lateinit var activityViewModel: ActivityViewModel
     private val tripId = tripId
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +73,7 @@ class AddActivityFragment(tripId: String) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        activityViewModel = ActivityViewModel(requireContext())
         binding = FragmentAddActivityBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -75,6 +84,8 @@ class AddActivityFragment(tripId: String) : Fragment() {
         if (!Places.isInitialized()) {
             Places.initializeWithNewPlacesApiEnabled(this.requireContext(), BuildConfig.MAPS_API_KEY)
         }
+        activityViewModel = ActivityViewModel(requireContext())
+
         txtActivityName = binding.txtActivityName
         txtActivityDate = binding.txtActivityDate
         txtActivityStartTime = binding.txtActivityStartTime
@@ -103,15 +114,13 @@ class AddActivityFragment(tripId: String) : Fragment() {
 
         activityCategory = selectActivityCategory(categorySpinner)
 
-
-
-        /*val autoCompleteFrag = childFragmentManager?.findFragmentById(R.id.autocomplete_fragment) as? AutocompleteSupportFragment
+        val autoCompleteFrag = childFragmentManager?.findFragmentById(R.id.activity_location_autocomplete_fragment) as? AutocompleteSupportFragment
         autoCompleteFrag?.setPlaceFields(listOf(Place.Field.ID, Place.Field.DISPLAY_NAME, Place.Field.LOCATION, Place.Field.RATING, Place.Field.TYPES))
         autoCompleteFrag?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                activityAddress = place.displayName
-                activityLatitude = place.location.latitude
-                activityLongitude = place.location.longitude
+                activityAddress = place.displayName?.toString().toString()
+                activityLatitude = place.location?.latitude
+                activityLongitude = place.location?.longitude
             }
 
             override fun onError(status: Status) {
@@ -119,7 +128,7 @@ class AddActivityFragment(tripId: String) : Fragment() {
             }
         })
 
-         */
+
     }
 
     private fun showDatePicker() {
@@ -220,24 +229,43 @@ class AddActivityFragment(tripId: String) : Fragment() {
             startDate=activityDate.toString(),
             startTime=activityStartTime.toString(),
             endTime=activityEndTime.toString(),
-            //address=activityAddress,
-            //latitude=activityLatitude,
-            //longitude=activityLongitude
+            address=activityAddress,
+            latitude=activityLatitude,
+            longitude=activityLongitude
         )
-        activityViewModel.createActivity(newActivity)
-        Toast.makeText(
-            this.requireContext(),
-            "Successfully added activity to itinerary",
-            Toast.LENGTH_LONG
-        ).show()
-        try {
+        val utils: NetworkUtils = NetworkUtils()
+
+        if (utils.hasNetwork(requireContext()) == true)
+        {
+            activityViewModel.createActivity(newActivity)
+            Toast.makeText(
+                this.requireContext(),
+                "Successfully added activity to itinerary",
+                Toast.LENGTH_LONG
+            ).show()
+            try {
+                val intent = Intent(this.requireContext(), TripItineraryActivity::class.java)
+                intent.putExtra("TripId", tripId)
+                startActivity(intent)
+            }catch(e: Exception)
+            {
+                Log.i("Error Saving Activity", e.toString())
+            }
+        }
+        else {
+            thread {
+                activityViewModel.saveActivityOffline(newActivity)
+            }
+            Toast.makeText(
+                requireContext(),
+                "You are offline, activity will be added when connection is restored",
+                Toast.LENGTH_LONG
+            ).show()
             val intent = Intent(this.requireContext(), TripItineraryActivity::class.java)
             intent.putExtra("TripId", tripId)
             startActivity(intent)
-        }catch(e: Exception)
-        {
-            Log.i("Error Saving Activity", e.toString())
         }
+
     }
 
 }

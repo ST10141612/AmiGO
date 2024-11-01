@@ -2,6 +2,8 @@ package Fragments
 
 import Models.Trips.Trip
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.amigo.R
 import com.example.amigo.TripItineraryActivity
 import com.example.amigo.databinding.TripItemBinding
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class TripRecyclerViewAdapter(
     private val values: List<Trip>
@@ -35,7 +39,12 @@ class TripRecyclerViewAdapter(
             holder.tripName.text = item.name
             holder.tripStartDate.text = item.startDate.toString()
             holder.tripEndDate.text = item.endDate.toString()
-            holder.tripImage.setImageResource(R.drawable.image_placeholder)
+
+            var successful = setImageBitMap(item.tripId, holder.tripImage)
+            if (!successful)
+            {
+                holder.tripImage.setImageResource(R.drawable.image_placeholder)
+            }
             holder.btnViewTrip.setOnClickListener{
                 val intent = Intent(view.context, TripItineraryActivity::class.java)
                 intent.putExtra("TripId", item.tripId)
@@ -45,6 +54,20 @@ class TripRecyclerViewAdapter(
         }
 
 
+    }
+
+private fun setImageBitMap(tripId: String?, iv: ImageView,): Boolean
+    {
+        var successful: Boolean = false
+        val storageRef: StorageReference = FirebaseStorage.getInstance().getReference("Trips/$tripId")
+        storageRef.getBytes(10*1024*1024).addOnSuccessListener { bytes ->
+            val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            iv.setImageBitmap(bmp)
+            successful = true
+        }.addOnFailureListener {
+            Log.i("Debugging", "Unable to attach image")
+        }
+        return successful
     }
 
     override fun getItemCount(): Int = values.size

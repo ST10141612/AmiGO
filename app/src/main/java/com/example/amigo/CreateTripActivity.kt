@@ -45,9 +45,13 @@ class CreateTripActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     private val calendar = Calendar.getInstance()
-    private val tripViewModel: TripViewModel = TripViewModel(applicationContext)
+    private lateinit var tripViewModel: TripViewModel
+
+    //private lateinit var imgStorageRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        tripViewModel = TripViewModel(applicationContext)
 
         binding = ActivityCreateTripBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -153,6 +157,8 @@ class CreateTripActivity : AppCompatActivity() {
             description = tripDescription
             )
 
+        //imgStorageRef = FirebaseStorage.getInstance().getReference("Trips/" + newTrip.tripId)
+        //imgStorageRef.putFile(selectedImgUri as Uri)
         tripViewModel.createTrip(newTrip)
         Toast.makeText(
             this,
