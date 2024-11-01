@@ -11,6 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.example.amigo.databinding.ActivityCreateTripBinding
 import com.google.android.libraries.places.api.Places
 import com.google.android.material.textfield.TextInputEditText
@@ -18,8 +21,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 class CreateTripActivity : AppCompatActivity() {
 
@@ -159,6 +164,21 @@ class CreateTripActivity : AppCompatActivity() {
             "Successfully created Trip!",
             Toast.LENGTH_LONG
         ).show()
+
+        val tripStartTime = tripStartDate.atStartOfDay().toEpochSecond(ZoneOffset.UTC) * 1000
+        val currentTime = System.currentTimeMillis()
+        val delay = tripStartTime - currentTime - (30 * 60 * 1000)
+
+        if (delay > 0) {
+            // Schedule notification using WorkManager
+            val notificationWorkRequest = OneTimeWorkRequestBuilder<TripNotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(workDataOf("tripName" to tripName))
+                .build()
+
+            WorkManager.getInstance(applicationContext).enqueue(notificationWorkRequest)
+        }
+
         val intent = Intent(this, TripItineraryActivity::class.java)
         intent.putExtra("TripId", newTrip.tripId)
         startActivity(intent)

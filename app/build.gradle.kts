@@ -61,10 +61,13 @@ android {
 
 dependencies {
 
+    val work_version="2.9.1"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
     implementation(libs.gson)
@@ -88,6 +91,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:19.0.0")
     implementation ("com.google.firebase:firebase-core:21.1.1")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation ("com.google.mlkit:translate:17.0.3")
 
 }
 
