@@ -93,6 +93,7 @@ dependencies {
     implementation(libs.googleid)
 
     implementation("androidx.biometric:biometric:1.1.0")
+    implementation ("com.google.mlkit:translate:17.0.3")
 
 }
 
