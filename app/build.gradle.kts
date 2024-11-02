@@ -94,6 +94,10 @@ dependencies {
 
     implementation("androidx.biometric:biometric:1.1.0")
     implementation ("com.google.mlkit:translate:17.0.3")
+    implementation("androidx.work:work-runtime:2.9.1")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
+
 
 }
 
