@@ -10,9 +10,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import com.example.amigo.BuildConfig
-import com.example.amigo.ExplorePlacesActivity
-import com.example.amigo.R
+import mtm.example.amigo.BuildConfig
+import mtm.example.amigo.ExplorePlacesActivity
+import mtm.example.amigo.R
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place

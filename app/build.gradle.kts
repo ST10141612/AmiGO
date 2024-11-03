@@ -26,12 +26,12 @@ var apiKeyProperties = Properties()
 apiKeyProperties.load(FileInputStream(apiKeyPropertiesFile))
 
 android {
-    namespace = "com.example.amigo"
+    namespace = "mtm.example.amigo"
     compileSdk = 34
     viewBinding.enable = true
 
     defaultConfig {
-        applicationId = "com.example.amigo"
+        applicationId = "mtm.example.amigo"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

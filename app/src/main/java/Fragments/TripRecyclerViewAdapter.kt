@@ -11,8 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.amigo.TripItineraryActivity
-import com.example.amigo.databinding.TripItemBinding
+import mtm.example.amigo.TripItineraryActivity
+import mtm.example.amigo.databinding.TripItemBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 

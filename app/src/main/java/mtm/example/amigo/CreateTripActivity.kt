@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import Models.Trips.Trip
 import Models.ViewModels.TripViewModel
@@ -16,20 +16,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
-import com.example.amigo.databinding.ActivityCreateTripBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.ActivityCreateTripBinding
 import com.google.android.libraries.places.api.Places
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import java.time.LocalDate
-import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.UUID
-import java.util.concurrent.TimeUnit
 
 class CreateTripActivity : AppCompatActivity() {
 

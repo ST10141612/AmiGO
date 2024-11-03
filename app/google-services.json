@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:783620285662:android:5d32cab5e56f6167018e4f",
         "android_client_info": {
-          "package_name": "com.example.amigo"
+          "package_name": "mtm.example.amigo"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "783620285662-qt5ubftvm3ti3hu7tn1iano8ss0dnhqv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.amigo",
+            "package_name": "mtm.example.amigo",
             "certificate_hash": "ec2cfb64fbb0e081cfa9f77357516b36b9938a29"
           }
         },

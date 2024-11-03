@@ -1,10 +1,11 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import Fragments.AddActivityFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.amigo.databinding.ActivityAddTripBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.ActivityAddTripBinding
 
 class AddTripActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddTripBinding

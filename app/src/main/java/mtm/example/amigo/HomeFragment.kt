@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.example.amigo.databinding.FragmentHomeBinding
+import mtm.example.amigo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private lateinit var btnCreateNewTrip: Button

@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import android.content.Context
 import android.content.res.Configuration

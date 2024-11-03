@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.amigo.R
-import com.example.amigo.databinding.ItineraryItemBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.ItineraryItemBinding
 
 class ItineraryRecyclerViewAdapter(
     private val values: List<Activity>

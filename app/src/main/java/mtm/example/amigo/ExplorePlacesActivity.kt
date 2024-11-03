@@ -1,11 +1,12 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import Fragments.SearchResultFragment
 import Models.ViewModels.ExplorePlacesViewModel
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.amigo.databinding.ActivityExplorePlacesBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.ActivityExplorePlacesBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.amigo.databinding.ActivityRegisterBinding
+import mtm.example.amigo.databinding.ActivityRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth

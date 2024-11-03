@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import android.util.Log
 import com.google.firebase.messaging.Constants.TAG

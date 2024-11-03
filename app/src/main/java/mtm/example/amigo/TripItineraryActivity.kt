@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import Fragments.ItineraryFragment
 import Models.Trips.Activity
@@ -11,7 +11,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.amigo.databinding.ActivityTripItineraryBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.ActivityTripItineraryBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

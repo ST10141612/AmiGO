@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import org.junit.Test
 

@@ -22,16 +22,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
-import com.example.amigo.BuildConfig
-import com.example.amigo.R
-import com.example.amigo.TripItineraryActivity
-import com.example.amigo.databinding.FragmentAddActivityBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.FragmentAddActivityBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.textfield.TextInputEditText
+import mtm.example.amigo.BuildConfig
+import mtm.example.amigo.TripItineraryActivity
 import retrofit.NetworkUtils
 import java.time.LocalDate
 import java.time.LocalTime
@@ -245,8 +245,7 @@ class AddActivityFragment(tripId: String) : Fragment() {
         )
         val utils: NetworkUtils = NetworkUtils()
 
-        if (utils.hasNetwork(requireContext()) == true)
-        {
+        if (utils.hasNetwork(requireContext()) == true) {
             activityViewModel.createActivity(newActivity)
             Toast.makeText(
                 this.requireContext(),
@@ -257,26 +256,25 @@ class AddActivityFragment(tripId: String) : Fragment() {
                 val intent = Intent(this.requireContext(), TripItineraryActivity::class.java)
                 intent.putExtra("TripId", tripId)
                 startActivity(intent)
-            }catch(e: Exception)
-            {
+            } catch (e: Exception) {
                 Log.i("Error Saving Activity", e.toString())
             }
-        activityViewModel.createActivity(newActivity)
-        Toast.makeText(
-            this.requireContext(),
-            "Successfully added activity to itinerary",
-            Toast.LENGTH_SHORT
-        ).show()
+            activityViewModel.createActivity(newActivity)
+            Toast.makeText(
+                this.requireContext(),
+                "Successfully added activity to itinerary",
+                Toast.LENGTH_SHORT
+            ).show()
 
-        showActivityCreatedNotification(activityName)
+            showActivityCreatedNotification(activityName)
 
-        try {
-            val intent = Intent(this.requireContext(), TripItineraryActivity::class.java)
-            intent.putExtra("TripId", tripId)
-            startActivity(intent)
-        }catch(e: Exception)
-        {
-            Log.i("Error Saving Activity", e.toString())
+            try {
+                val intent = Intent(this.requireContext(), TripItineraryActivity::class.java)
+                intent.putExtra("TripId", tripId)
+                startActivity(intent)
+            } catch (e: Exception) {
+                Log.i("Error Saving Activity", e.toString())
+            }
         }
         else {
             thread {

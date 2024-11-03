@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import Fragments.ExplorePlacesFragment
 import android.Manifest
@@ -13,8 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.amigo.databinding.ActivityMainBinding
+import mtm.example.amigo.databinding.ActivityMainBinding
 import androidx.annotation.RequiresApi
+import mtm.example.amigo.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

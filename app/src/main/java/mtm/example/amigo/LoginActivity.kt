@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 
 
@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.amigo.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,9 +21,10 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
-import com.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_ERROR
-import com.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_FAILED
-import com.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_SUCCESSFUL
+import mtm.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_ERROR
+import mtm.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_FAILED
+import mtm.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_SUCCESSFUL
+import mtm.example.amigo.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), AmigoBiometricManager.Callback {
 
@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity(), AmigoBiometricManager.Callback {
 
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.client_id))
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import com.example.amigo.databinding.SearchResultItemBinding
+import mtm.example.amigo.databinding.SearchResultItemBinding
 import com.google.android.libraries.places.api.model.Place
 import java.io.BufferedInputStream
 import java.io.InputStream

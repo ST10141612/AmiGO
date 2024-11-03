@@ -1,4 +1,4 @@
-package com.example.amigo
+package mtm.example.amigo
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,7 +12,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.NightMode
 import androidx.appcompat.widget.SwitchCompat
-import com.example.amigo.databinding.FragmentPreferenceBinding
+import mtm.example.amigo.R
+import mtm.example.amigo.databinding.FragmentPreferenceBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
