@@ -1,45 +1,47 @@
 package com.example.amigo
 
 
-import android.content.ContentValues.TAG
+
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.amigo.databinding.ActivityLoginBinding
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import com.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_ERROR
+import com.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_FAILED
+import com.example.amigo.AmigoBiometricManager.Callback.Companion.AUTHENTICATION_SUCCESSFUL
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), AmigoBiometricManager.Callback {
 
     private lateinit var etUsername: TextInputEditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var buttonLogin: Button
     private lateinit var buttonsignUp: Button
     private lateinit var buttonGoogleSignIn: Button
-
+    private lateinit var buttonAuthBiometric: ImageView
 
     private lateinit var auth: FirebaseAuth
-    private var oneTapClient: SignInClient? = null
-    private lateinit var signInRequest: BeginSignInRequest
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private val reqCode: Int = 123
+
+    private var amigoBiometricManager: AmigoBiometricManager? = null
+
 
 
 
@@ -50,6 +52,10 @@ class LoginActivity : AppCompatActivity() {
         if (currentUser != null) {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
+        }
+        if(GoogleSignIn.getLastSignedInAccount(this)!=null){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 
@@ -62,24 +68,27 @@ class LoginActivity : AppCompatActivity() {
         etPassword = binding.password
         buttonLogin = binding.btnLogin
         buttonsignUp = binding.btnSignUp
-        buttonGoogleSignIn = binding.btnGoogle
+        buttonGoogleSignIn = binding.btnGoogleSignin
+        buttonAuthBiometric = binding.btnAuthBiometric
 
         auth = Firebase.auth
-        oneTapClient = Identity.getSignInClient(this)
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        signInRequest = BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    // Your server's client ID, not your Android client ID.
-                    .setServerClientId(getString(R.string.client_id))
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(false)
-                    .build())
+        amigoBiometricManager = AmigoBiometricManager.getInstance(this)
+
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
             .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
 
-
+        buttonAuthBiometric.setOnClickListener {
+            if (amigoBiometricManager!!.checkIfBiometricFeatureAvailable()) {
+                amigoBiometricManager!!.authenticate()
+            }
+        }
 
         buttonsignUp.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -99,10 +108,11 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Enter password", Toast.LENGTH_SHORT).show()
             }
 
+            Toast.makeText(this,"Logging In", Toast.LENGTH_SHORT).show()
             auth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-
+                        saveCredentials(username, password)
                         Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
@@ -115,50 +125,136 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-    }
-
-    fun signingGoogle(view: View) {
-        CoroutineScope(Dispatchers.Main).launch {
-            signingGoogle()
+        buttonGoogleSignIn.setOnClickListener {
+            Toast.makeText(this,"Logging In with Google", Toast.LENGTH_SHORT).show()
+            signInWithGoogle()
         }
-    }
-    private suspend fun signingGoogle(){
-        val result = oneTapClient?.beginSignIn(signInRequest)?.await()
-        val intentSenderRequest = IntentSenderRequest.Builder(result!!.pendingIntent).build()
-        activityResultLauncher.launch(intentSenderRequest)
+
     }
 
-    private val activityResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
-        registerForActivityResult(
-            ActivityResultContracts.StartIntentSenderForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                try {
-                    val credential = oneTapClient!!.getSignInCredentialFromIntent(result.data)
-                    val idToken = credential.googleIdToken
-                    if (idToken != null) {
-                        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                        auth.signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val user = auth.currentUser
-                                Toast.makeText(this, "Sign In Complete, Welcome ${user?.displayName}", Toast.LENGTH_LONG).show()
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(intent)
-                                finish() // Finish the LoginActivity
-                            } else {
-                                Log.e(TAG, "Sign-in failed: ${task.exception?.message}")
-                                Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                } catch (e: ApiException) {
-                    e.printStackTrace()
-                    Log.e(TAG, "Google sign-in error: ${e.message}")
+///this code is adapted from Youtube
+///https://www.youtube.com/watch?v=5IcL8QKOkPE
+//Ravecode Android
+///https://www.youtube.com/@RavecodeAndroid
+
+    private fun signInWithGoogle(){
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, reqCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            reqCode -> {
+                // Google Sign-In result
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleResult(task)
+            }
+
+            AmigoBiometricManager.REQUEST_CODE -> {
+                // Handle biometric authentication result
+                if (resultCode == RESULT_OK) {
+                    // Add specific logic for successful biometric authentication, if any
+
+                    
+                    Log.d("TAG", "Biometric authentication successful")
+                } else {
+                    // Handle failure cases
+                    Log.d("TAG", "Biometric authentication failed or cancelled")
                 }
-            } else {
-                Log.e(TAG, "Google Sign-In Result Failed")
+            }
+
+            else -> {
+                // Handle other cases, if there are any
+                Log.d("TAG", "Unhandled request code: $requestCode")
             }
         }
+    }
+
+
+    private fun handleResult(completedTask: Task<GoogleSignInAccount>){
+        try {
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+            if (account != null) {
+                updateUI(account)
+            }
+        } catch (e: ApiException){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateUI(account: GoogleSignInAccount){
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                account.email.toString()
+                account.displayName.toString()
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+
+    override fun onBiometricAuthenticationResult(result: String?, errString: CharSequence?) {
+        when (result) {
+            AUTHENTICATION_SUCCESSFUL -> {
+                Toast.makeText(this@LoginActivity, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+
+                // Retrieve saved credentials (this example assumes SharedPreferences)
+                val username = getSavedUsername()
+                val password = getSavedPassword()
+
+                // Check if credentials are available
+                if (!username.isNullOrEmpty() && !password.isNullOrEmpty()) {
+                    // Log in with Firebase using the saved credentials
+                    auth.signInWithEmailAndPassword(username, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Navigate to the main activity
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this@LoginActivity, "Authentication failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(this@LoginActivity, "No saved credentials found", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            AUTHENTICATION_FAILED -> {
+                Toast.makeText(this@LoginActivity, "Authentication failed", Toast.LENGTH_SHORT).show()
+                Log.d("TAG", "AUTHENTICATION_FAILED")
+            }
+
+            AUTHENTICATION_ERROR -> {
+                Toast.makeText(this@LoginActivity, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                Log.d("TAG", "AUTHENTICATION_ERROR")
+            }
+        }
+    }
+
+    private fun saveCredentials(username: String, password: String) {
+        val sharedPreferences = getSharedPreferences("AmigoPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("USERNAME_KEY", username)
+        editor.putString("PASSWORD_KEY", password)
+        editor.apply()
+    }
+
+
+    private fun getSavedUsername(): String? {
+        val sharedPreferences = getSharedPreferences("AmigoPrefs", MODE_PRIVATE)
+        return sharedPreferences.getString("USERNAME_KEY", null)
+    }
+
+    private fun getSavedPassword(): String? {
+        val sharedPreferences = getSharedPreferences("AmigoPrefs", MODE_PRIVATE)
+        return sharedPreferences.getString("PASSWORD_KEY", null)
+    }
 
 
 

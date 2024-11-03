@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
                 android:hint="@string/password"
+                android:password="true"
                 style="@style/TextColor"/>
         </com.google.android.material.textfield.TextInputLayout>
 
