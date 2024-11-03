@@ -56,6 +56,9 @@
     <string name="btn_save_activity">Save Activity</string>
     <string name="txt_create_new_trip">Create a new Trip</string>
     <string name="email">Email</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="zulu">Zulu</string>
+    <string name="english">English</string>
 
 
 </resources>
