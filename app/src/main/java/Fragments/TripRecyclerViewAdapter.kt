@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.amigo.R
 import com.example.amigo.TripItineraryActivity
 import com.example.amigo.databinding.TripItemBinding
 import com.google.firebase.storage.FirebaseStorage
@@ -40,11 +39,11 @@ class TripRecyclerViewAdapter(
             holder.tripStartDate.text = item.startDate.toString()
             holder.tripEndDate.text = item.endDate.toString()
 
-            var successful = setImageBitMap(item.tripId, holder.tripImage)
+           /* var successful = setImageBitMap(item.tripId, holder.tripImage)
             if (!successful)
             {
                 holder.tripImage.setImageResource(R.drawable.image_placeholder)
-            }
+            }*/
             holder.btnViewTrip.setOnClickListener{
                 val intent = Intent(view.context, TripItineraryActivity::class.java)
                 intent.putExtra("TripId", item.tripId)
@@ -76,7 +75,7 @@ private fun setImageBitMap(tripId: String?, iv: ImageView,): Boolean
         val tripName: TextView = binding.lblTripName
         val tripStartDate: TextView = binding.lblTripStartDate
         val tripEndDate: TextView = binding.lblTripEndDate
-        val tripImage: ImageView = binding.ivTripImage
+        //val tripImage: ImageView = binding.ivTripImage
         val btnViewTrip: Button = binding.btnViewTrip
 
         override fun toString(): String {

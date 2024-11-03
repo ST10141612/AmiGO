@@ -5,11 +5,9 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import com.example.amigo.R
 import com.example.amigo.databinding.SearchResultItemBinding
 import com.google.android.libraries.places.api.model.Place
 import java.io.BufferedInputStream
@@ -38,7 +36,7 @@ class SearchResultRecyclerViewAdapter(
         holder.placeName.text = item.displayName
         holder.placeAddress.text = item.formattedAddress
         holder.placeRating.text = "Rating: ${item.rating}/5"
-        holder.placeProfilePic.setImageResource(R.drawable.image_placeholder)
+        //holder.placeProfilePic.setImageResource(R.drawable.image_placeholder)
         //holder.placeProfilePic.setImageBitmap(getImageBitmap(item.photoMetadatas[7].authorAttributions.asList()[0].photoUri))
         Log.i("Checking API Results", "${item.photoMetadatas[7].authorAttributions.asList()[0].photoUri.toUri()}")
     }
@@ -49,7 +47,7 @@ class SearchResultRecyclerViewAdapter(
         val placeName: TextView = binding.tvPlaceName
         val placeAddress: TextView = binding.tvPlaceAddress
         val placeRating: TextView = binding.tvRating
-        val placeProfilePic: ImageView = binding.ivProfile
+        //val placeProfilePic: ImageView = binding.ivProfile
 
         override fun toString(): String {
             return super.toString() + " '" + placeName.text + "'"
