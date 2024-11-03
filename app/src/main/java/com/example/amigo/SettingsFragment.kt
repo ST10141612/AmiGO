@@ -86,9 +86,20 @@ class SettingsFragment : Fragment() {
             fragmentTransaction.commit()
         }
 
-        //binding.btnChangeToAfrikaans.setOnClickListener { translateText("af") }
+        binding.btnChangeToAfrikaans.setOnClickListener {
+            LanguageUtils.setLocale(requireContext(), "af")
+            activity?.recreate()
+        }
 
-        //binding.btnChangeToZulu.setOnClickListener { translateText("zu") }
+        binding.btnChangeToZulu.setOnClickListener {
+            LanguageUtils.setLocale(requireContext(), "zu")
+            activity?.recreate()
+        }
+
+        binding.btnChangeToEnglish.setOnClickListener {
+            LanguageUtils.setLocale(requireContext(), "en")
+            activity?.recreate()
+        }
 
         // Inflate the layout for this fragment
         return binding.root
