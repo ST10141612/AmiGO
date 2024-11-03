@@ -3,8 +3,12 @@ package Fragments
 import Models.Trips.Activity
 import Models.ViewModels.ActivityViewModel
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +20,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import com.example.amigo.BuildConfig
 import com.example.amigo.R
@@ -30,6 +35,7 @@ import com.google.android.material.textfield.TextInputEditText
 import retrofit.NetworkUtils
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
 import java.util.Calendar
 import java.util.UUID
 import kotlin.concurrent.thread
@@ -95,6 +101,8 @@ class AddActivityFragment(tripId: String) : Fragment() {
         btnPickStartTime = binding.btnPickStartTime
         btnPickEndTime = binding.btnPickEndTime
         btnSave = binding.btnSaveActivity
+
+        Log.d("Log", "Understanding log")
 
         btnPickDate.setOnClickListener{
             showDatePicker()
@@ -220,6 +228,8 @@ class AddActivityFragment(tripId: String) : Fragment() {
 
     private fun saveActivity()
     {
+        val southAfricaZoneId = ZoneId.of("Africa/Johannesburg")
+
         activityName = txtActivityName.text.toString()
         val newActivity = Activity(
             activityId = UUID.randomUUID().toString(),
@@ -251,6 +261,22 @@ class AddActivityFragment(tripId: String) : Fragment() {
             {
                 Log.i("Error Saving Activity", e.toString())
             }
+        activityViewModel.createActivity(newActivity)
+        Toast.makeText(
+            this.requireContext(),
+            "Successfully added activity to itinerary",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        showActivityCreatedNotification(activityName)
+
+        try {
+            val intent = Intent(this.requireContext(), TripItineraryActivity::class.java)
+            intent.putExtra("TripId", tripId)
+            startActivity(intent)
+        }catch(e: Exception)
+        {
+            Log.i("Error Saving Activity", e.toString())
         }
         else {
             thread {
@@ -266,6 +292,32 @@ class AddActivityFragment(tripId: String) : Fragment() {
             startActivity(intent)
         }
 
+    }
+
+    private fun showActivityCreatedNotification(activityName: String) {
+        val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channelId = "activity_created_notification_channel"
+
+        // Create the notification channel for Android Oreo and higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Activity Creation Notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Create the notification
+        val notification = NotificationCompat.Builder(requireContext(), channelId)
+            .setContentTitle("Activity Created")
+            .setContentText("Your activity '$activityName' has been successfully added!")
+            .setSmallIcon(R.drawable.ic_notification)  // Replace with your icon resource
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        // Show the notification with a unique ID to prevent conflicts
+        notificationManager.notify(3, notification)
     }
 
 }

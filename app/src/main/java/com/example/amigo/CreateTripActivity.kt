@@ -3,14 +3,19 @@ package com.example.amigo
 import Models.Trips.Trip
 import Models.ViewModels.TripViewModel
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
@@ -160,34 +165,45 @@ class CreateTripActivity : AppCompatActivity() {
             startDate = tripStartDate.toString(),
             endDate = tripEndDate.toString(),
             description = tripDescription
-            )
+        )
 
         //imgStorageRef = FirebaseStorage.getInstance().getReference("Trips/" + newTrip.tripId)
         //imgStorageRef.putFile(selectedImgUri as Uri)
         tripViewModel.createTrip(newTrip)
+
+        showTripCreatedNotification(tripName)
         Toast.makeText(
             this,
             "Successfully created Trip!",
             Toast.LENGTH_LONG
         ).show()
 
-        val tripStartTime = tripStartDate.atStartOfDay().toEpochSecond(ZoneOffset.UTC) * 1000
-        val currentTime = System.currentTimeMillis()
-        val delay = tripStartTime - currentTime - (30 * 60 * 1000)
-
-        if (delay > 0) {
-            // Schedule notification using WorkManager
-            val notificationWorkRequest = OneTimeWorkRequestBuilder<TripNotificationWorker>()
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-                .setInputData(workDataOf("tripName" to tripName))
-                .build()
-
-            WorkManager.getInstance(applicationContext).enqueue(notificationWorkRequest)
-        }
-
         val intent = Intent(this, TripItineraryActivity::class.java)
         intent.putExtra("TripId", newTrip.tripId)
         startActivity(intent)
 
+    }
+
+
+    private fun showTripCreatedNotification(tripName: String) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channelId = "trip_created_notification_channel"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Trip Creation Notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle("Trip Created")
+            .setContentText("Your trip '$tripName' has been successfully created!")
+            .setSmallIcon(R.drawable.ic_notification)  // Replace with your own icon
+            .build()
+
+        notificationManager.notify(2, notification)  // Use a different ID to avoid conflict with reminder notification
     }
 }

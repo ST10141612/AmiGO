@@ -17,6 +17,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translator
+import com.google.mlkit.nl.translate.TranslatorOptions
+import com.google.mlkit.nl.translate.Translation
+
 ///this code is adapted from Youtube
 ///https://www.youtube.com/watch?v=QAKq8UBv4GI&t=1750s
 ///Codes Easy
@@ -80,9 +85,26 @@ class SettingsFragment : Fragment() {
             fragmentTransaction.addToBackStack(null) // Add transaction to backstack for reverse navigation
             fragmentTransaction.commit()
         }
+
+        binding.btnChangeToAfrikaans.setOnClickListener {
+            LanguageUtils.setLocale(requireContext(), "af")
+            activity?.recreate()
+        }
+
+        binding.btnChangeToZulu.setOnClickListener {
+            LanguageUtils.setLocale(requireContext(), "zu")
+            activity?.recreate()
+        }
+
+        binding.btnChangeToEnglish.setOnClickListener {
+            LanguageUtils.setLocale(requireContext(), "en")
+            activity?.recreate()
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
+
 
 
 }

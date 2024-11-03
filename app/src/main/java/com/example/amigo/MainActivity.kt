@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             askNotificationPermission()
         }
 
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment())
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                 }
             }
-                true
+            true
         }
 
 
@@ -106,5 +107,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 }
